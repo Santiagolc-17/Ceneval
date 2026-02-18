@@ -1,0 +1,224 @@
+const questions = [
+  { category: "Historia", question: "¿En qué año llegó el ser humano a la Luna?", options: ["1969", "1958", "1975", "1981"], answer: "1969", explanation: "La misión Apolo 11 alunizó el 20 de julio de 1969." },
+  { category: "Ciencia", question: "¿Cuál es el planeta más grande del sistema solar?", options: ["Júpiter", "Saturno", "Tierra", "Marte"], answer: "Júpiter", explanation: "Júpiter es el planeta con mayor masa y diámetro." },
+  { category: "Geografía", question: "¿Cuál es la capital de Australia?", options: ["Canberra", "Sídney", "Melbourne", "Perth"], answer: "Canberra", explanation: "Aunque Sídney es famosa, la capital oficial es Canberra." },
+  { category: "Arte", question: "¿Quién pintó la Mona Lisa?", options: ["Leonardo da Vinci", "Picasso", "Van Gogh", "Miguel Ángel"], answer: "Leonardo da Vinci", explanation: "La Gioconda fue pintada por Leonardo da Vinci." },
+  { category: "Música", question: "¿Cuántas cuerdas tiene una guitarra clásica?", options: ["6", "4", "7", "12"], answer: "6", explanation: "La guitarra clásica estándar tiene seis cuerdas." },
+  { category: "Tecnología", question: "¿Qué significa HTML?", options: ["HyperText Markup Language", "HighText Machine Language", "Home Tool Markup Language", "Hyper Transfer Main Link"], answer: "HyperText Markup Language", explanation: "HTML es el lenguaje de marcado base de la web." },
+  { category: "Deportes", question: "¿Cuántos jugadores por equipo hay en cancha en baloncesto?", options: ["5", "6", "7", "4"], answer: "5", explanation: "En juego oficial hay cinco por equipo en cancha." },
+  { category: "Naturaleza", question: "¿Qué gas respiramos principalmente del aire para vivir?", options: ["Oxígeno", "Nitrógeno", "Dióxido de carbono", "Helio"], answer: "Oxígeno", explanation: "El oxígeno es esencial para la respiración celular humana." },
+  { category: "Literatura", question: "¿Quién escribió 'Cien años de soledad'?", options: ["Gabriel García Márquez", "Julio Cortázar", "Mario Vargas Llosa", "Pablo Neruda"], answer: "Gabriel García Márquez", explanation: "La novela fue publicada en 1967 por Gabo." },
+  { category: "Cine", question: "¿Qué película incluye el personaje Jack Sparrow?", options: ["Piratas del Caribe", "Titanic", "Avatar", "Gladiador"], answer: "Piratas del Caribe", explanation: "Jack Sparrow es protagonista en Piratas del Caribe." },
+
+  { category: "Historia", question: "¿Qué civilización construyó Machu Picchu?", options: ["Inca", "Maya", "Azteca", "Romana"], answer: "Inca", explanation: "Machu Picchu fue construido por el Imperio inca." },
+  { category: "Ciencia", question: "¿Cuál es el símbolo químico del oro?", options: ["Au", "Ag", "O", "Go"], answer: "Au", explanation: "Au viene del latín aurum." },
+  { category: "Geografía", question: "¿Cuál es el río más largo del mundo (aceptado comúnmente en muchos textos escolares)?", options: ["Nilo", "Amazonas", "Yangtsé", "Misisipi"], answer: "Nilo", explanation: "En muchas referencias escolares se enseña el Nilo como el más largo." },
+  { category: "Arte", question: "¿Qué estilo artístico practicó Salvador Dalí?", options: ["Surrealismo", "Cubismo", "Barroco", "Impresionismo"], answer: "Surrealismo", explanation: "Dalí es una figura icónica del surrealismo." },
+  { category: "Música", question: "¿Qué instrumento tocaba principalmente Ludwig van Beethoven?", options: ["Piano", "Violín", "Flauta", "Batería"], answer: "Piano", explanation: "Beethoven fue compositor y pianista." },
+  { category: "Tecnología", question: "¿Qué empresa desarrolla el sistema operativo Android?", options: ["Google", "Apple", "Microsoft", "Meta"], answer: "Google", explanation: "Android es desarrollado por Google." },
+  { category: "Deportes", question: "¿Cuánto dura un partido de fútbol profesional?", options: ["90 minutos", "60 minutos", "80 minutos", "120 minutos"], answer: "90 minutos", explanation: "Se divide en dos tiempos de 45 minutos." },
+  { category: "Naturaleza", question: "¿Cuál es el mamífero más grande del planeta?", options: ["Ballena azul", "Elefante africano", "Jirafa", "Hipopótamo"], answer: "Ballena azul", explanation: "La ballena azul puede superar los 25 metros." },
+  { category: "Literatura", question: "¿Quién escribió Don Quijote de la Mancha?", options: ["Miguel de Cervantes", "Lope de Vega", "Góngora", "Quevedo"], answer: "Miguel de Cervantes", explanation: "Cervantes publicó la primera parte en 1605." },
+  { category: "Cine", question: "¿Qué saga tiene un villano llamado Darth Vader?", options: ["Star Wars", "Harry Potter", "Matrix", "Dune"], answer: "Star Wars", explanation: "Darth Vader es uno de los personajes centrales de Star Wars." },
+
+  { category: "Historia", question: "¿Qué muro cayó en 1989?", options: ["Muro de Berlín", "Muro de Adriano", "Gran Muralla", "Muro de los Lamentos"], answer: "Muro de Berlín", explanation: "Su caída marcó el fin simbólico de la Guerra Fría en Europa." },
+  { category: "Ciencia", question: "¿Qué parte de la célula contiene el ADN en eucariotas?", options: ["Núcleo", "Citoplasma", "Membrana", "Ribosoma"], answer: "Núcleo", explanation: "En células eucariotas el ADN está principalmente en el núcleo." },
+  { category: "Geografía", question: "¿Cuál es el océano más grande?", options: ["Pacífico", "Atlántico", "Índico", "Ártico"], answer: "Pacífico", explanation: "El océano Pacífico es el de mayor extensión." },
+  { category: "Arte", question: "¿En qué museo está la Mona Lisa?", options: ["Louvre", "Prado", "Met", "Uffizi"], answer: "Louvre", explanation: "El Louvre en París alberga esta obra." },
+  { category: "Música", question: "¿Qué cantante es conocido como el 'Rey del Pop'?", options: ["Michael Jackson", "Elvis Presley", "Prince", "Freddie Mercury"], answer: "Michael Jackson", explanation: "Michael Jackson recibió ese apodo mundialmente." },
+  { category: "Tecnología", question: "¿Cuál de estos es un lenguaje de programación?", options: ["Python", "Photoshop", "Excel", "Chrome"], answer: "Python", explanation: "Python es un lenguaje de propósito general." },
+  { category: "Deportes", question: "¿Qué país ganó el Mundial de fútbol de 2022?", options: ["Argentina", "Francia", "Brasil", "Croacia"], answer: "Argentina", explanation: "Argentina ganó la final ante Francia en Catar." },
+  { category: "Naturaleza", question: "¿Cuál es el proceso por el que las plantas producen su alimento?", options: ["Fotosíntesis", "Respiración", "Fermentación", "Evaporación"], answer: "Fotosíntesis", explanation: "Usan luz solar, agua y CO₂ para producir glucosa." },
+  { category: "Literatura", question: "¿Quién escribió 'La Odisea'?", options: ["Homero", "Sófocles", "Virgilio", "Platón"], answer: "Homero", explanation: "La Odisea es una epopeya atribuida a Homero." },
+  { category: "Cine", question: "¿Quién dirigió 'Titanic' (1997)?", options: ["James Cameron", "Steven Spielberg", "Ridley Scott", "Christopher Nolan"], answer: "James Cameron", explanation: "James Cameron escribió y dirigió Titanic." },
+
+  { category: "Historia", question: "¿Quién fue el primer presidente de Estados Unidos?", options: ["George Washington", "Abraham Lincoln", "John Adams", "Thomas Jefferson"], answer: "George Washington", explanation: "Washington fue elegido en 1789." },
+  { category: "Ciencia", question: "¿Qué planeta es conocido como el planeta rojo?", options: ["Marte", "Venus", "Mercurio", "Júpiter"], answer: "Marte", explanation: "Su tonalidad rojiza se debe al óxido de hierro." },
+  { category: "Geografía", question: "¿Cuál es el país más grande del mundo por superficie?", options: ["Rusia", "Canadá", "China", "Estados Unidos"], answer: "Rusia", explanation: "Rusia es el país más extenso del planeta." },
+  { category: "Arte", question: "¿Quién pintó 'La noche estrellada'?", options: ["Vincent van Gogh", "Monet", "Rembrandt", "Kandinsky"], answer: "Vincent van Gogh", explanation: "Es una de sus obras más reconocidas." },
+  { category: "Música", question: "¿Qué cantante colombiana lanzó 'Hips Don't Lie'?", options: ["Shakira", "Karol G", "Paulina Rubio", "Aitana"], answer: "Shakira", explanation: "La canción de 2006 fue éxito global." },
+  { category: "Tecnología", question: "¿Qué significa CPU?", options: ["Central Processing Unit", "Computer Personal Unit", "Control Program Utility", "Core Power Unit"], answer: "Central Processing Unit", explanation: "La CPU ejecuta instrucciones del sistema." },
+  { category: "Deportes", question: "¿En qué deporte se usa un 'birdie' o volante?", options: ["Bádminton", "Tenis", "Ping-pong", "Squash"], answer: "Bádminton", explanation: "El birdie es el proyectil del bádminton." },
+  { category: "Naturaleza", question: "¿Qué vitamina produce la piel con ayuda del sol?", options: ["Vitamina D", "Vitamina C", "Vitamina A", "Vitamina K"], answer: "Vitamina D", explanation: "La exposición solar favorece su síntesis." },
+  { category: "Literatura", question: "¿Quién escribió '1984'?", options: ["George Orwell", "Aldous Huxley", "Ray Bradbury", "Jules Verne"], answer: "George Orwell", explanation: "1984 es una novela distópica de Orwell." },
+  { category: "Cine", question: "¿Cuál es la película animada de Pixar sobre emociones?", options: ["Intensa-Mente", "Coco", "Up", "Toy Story"], answer: "Intensa-Mente", explanation: "Inside Out (Intensa-Mente) trata las emociones humanas." },
+
+  { category: "Historia", question: "¿Qué imperio gobernó gran parte de América antes de la llegada española en México central?", options: ["Azteca", "Inca", "Maya", "Olmeca"], answer: "Azteca", explanation: "El imperio mexica o azteca dominaba la región." },
+  { category: "Ciencia", question: "¿Cuál es el metal líquido a temperatura ambiente?", options: ["Mercurio", "Hierro", "Plata", "Cobre"], answer: "Mercurio", explanation: "El mercurio permanece líquido a temperatura ambiente." },
+  { category: "Geografía", question: "¿Qué cordillera separa gran parte de Chile y Argentina?", options: ["Andes", "Alpes", "Himalaya", "Apalaches"], answer: "Andes", explanation: "La Cordillera de los Andes recorre Sudamérica." },
+  { category: "Arte", question: "¿Qué artista es famoso por el mural 'Guernica'?", options: ["Pablo Picasso", "Dalí", "Miró", "Goya"], answer: "Pablo Picasso", explanation: "Guernica fue pintado por Picasso en 1937." },
+  { category: "Música", question: "¿Qué género popularizó Bob Marley?", options: ["Reggae", "Salsa", "Blues", "Tango"], answer: "Reggae", explanation: "Bob Marley es ícono mundial del reggae." },
+  { category: "Tecnología", question: "¿Qué red social se caracteriza por videos cortos virales?", options: ["TikTok", "LinkedIn", "Reddit", "Pinterest"], answer: "TikTok", explanation: "TikTok popularizó el formato de clips cortos." },
+  { category: "Deportes", question: "¿Cuántos sets se necesitan para ganar un partido de tenis masculino en Grand Slam?", options: ["3 sets", "2 sets", "4 sets", "5 sets"], answer: "3 sets", explanation: "Se juega al mejor de cinco; gana quien logra tres." },
+  { category: "Naturaleza", question: "¿Qué animal es conocido como el rey de la selva?", options: ["León", "Tigre", "Jaguar", "Lobo"], answer: "León", explanation: "Tradicionalmente el león recibe ese título." },
+  { category: "Literatura", question: "¿Quién escribió 'El principito'?", options: ["Antoine de Saint-Exupéry", "Victor Hugo", "Albert Camus", "J.K. Rowling"], answer: "Antoine de Saint-Exupéry", explanation: "El principito se publicó en 1943." },
+  { category: "Cine", question: "¿Qué actor interpreta a Iron Man en Marvel?", options: ["Robert Downey Jr.", "Chris Evans", "Chris Hemsworth", "Mark Ruffalo"], answer: "Robert Downey Jr.", explanation: "Interpretó a Tony Stark durante más de una década." },
+
+  { category: "Historia", question: "¿Qué país inició la Revolución Industrial?", options: ["Reino Unido", "Francia", "Alemania", "Italia"], answer: "Reino Unido", explanation: "Comenzó en Gran Bretaña en el siglo XVIII." },
+  { category: "Ciencia", question: "¿Cuál es el satélite natural de la Tierra?", options: ["Luna", "Fobos", "Europa", "Titán"], answer: "Luna", explanation: "La Tierra tiene un satélite natural principal: la Luna." },
+  { category: "Geografía", question: "¿Cuál es la capital de Japón?", options: ["Tokio", "Kioto", "Osaka", "Nara"], answer: "Tokio", explanation: "Tokio es la capital y mayor área metropolitana de Japón." },
+  { category: "Arte", question: "¿Qué movimiento artístico incluye a Monet y Renoir?", options: ["Impresionismo", "Futurismo", "Neoclasicismo", "Dadaísmo"], answer: "Impresionismo", explanation: "Monet y Renoir fueron pintores impresionistas." },
+  { category: "Música", question: "¿Cuál es la clave de sol en música?", options: ["Un símbolo para notas agudas", "Un instrumento", "Una escala", "Un compás"], answer: "Un símbolo para notas agudas", explanation: "La clave de sol indica la posición del sol en el pentagrama." },
+  { category: "Tecnología", question: "¿Qué significa URL?", options: ["Uniform Resource Locator", "Universal Route Link", "Unified Resource Line", "User Remote Link"], answer: "Uniform Resource Locator", explanation: "Es la dirección de un recurso en internet." },
+  { category: "Deportes", question: "¿Qué país es famoso por inventar el sumo?", options: ["Japón", "China", "Corea", "Tailandia"], answer: "Japón", explanation: "El sumo es un deporte tradicional japonés." },
+  { category: "Naturaleza", question: "¿Qué ave no puede volar y habita la Antártida?", options: ["Pingüino", "Albatros", "Cóndor", "Pelícano"], answer: "Pingüino", explanation: "Los pingüinos están adaptados al nado, no al vuelo." },
+  { category: "Literatura", question: "¿Quién escribió 'Harry Potter'?", options: ["J.K. Rowling", "Suzanne Collins", "Stephen King", "J.R.R. Tolkien"], answer: "J.K. Rowling", explanation: "Rowling es la autora de la saga." },
+  { category: "Cine", question: "¿Qué película ganó el Oscar a Mejor Película en 2020?", options: ["Parasite", "1917", "Joker", "Ford v Ferrari"], answer: "Parasite", explanation: "Parasite ganó en 2020 y marcó un hito para el cine coreano." },
+
+  { category: "Historia", question: "¿Qué navegante llegó a América en 1492?", options: ["Cristóbal Colón", "Magallanes", "Américo Vespucio", "Vasco da Gama"], answer: "Cristóbal Colón", explanation: "Colón llegó al continente americano en 1492." },
+  { category: "Ciencia", question: "¿Qué instrumento mide terremotos?", options: ["Sismógrafo", "Barómetro", "Termómetro", "Anemómetro"], answer: "Sismógrafo", explanation: "El sismógrafo registra movimientos sísmicos." },
+  { category: "Geografía", question: "¿Cuál es la capital de México?", options: ["Ciudad de México", "Guadalajara", "Monterrey", "Puebla"], answer: "Ciudad de México", explanation: "CDMX es la capital del país." },
+  { category: "Arte", question: "¿Quién pintó 'La última cena'?", options: ["Leonardo da Vinci", "Rafael", "Caravaggio", "Velázquez"], answer: "Leonardo da Vinci", explanation: "El mural está en Santa Maria delle Grazie, Milán." },
+  { category: "Música", question: "¿Qué cantante es llamada 'La Reina del Pop'?", options: ["Madonna", "Beyoncé", "Adele", "Rihanna"], answer: "Madonna", explanation: "Madonna es conocida por ese apodo en la cultura pop." },
+  { category: "Tecnología", question: "¿Cuál de estos es un navegador web?", options: ["Firefox", "Figma", "Slack", "VSCode"], answer: "Firefox", explanation: "Firefox es un navegador desarrollado por Mozilla." },
+  { category: "Deportes", question: "¿Cuántos anillos olímpicos hay en el símbolo oficial?", options: ["5", "4", "6", "7"], answer: "5", explanation: "Representan los continentes habitados." },
+  { category: "Naturaleza", question: "¿Cuál es el proceso del agua que sube en forma de vapor?", options: ["Evaporación", "Condensación", "Precipitación", "Sublimación"], answer: "Evaporación", explanation: "La evaporación transforma agua líquida en vapor." },
+  { category: "Literatura", question: "¿Quién escribió 'Rayuela'?", options: ["Julio Cortázar", "Borges", "Sabato", "Neruda"], answer: "Julio Cortázar", explanation: "Rayuela es una novela emblemática del boom latinoamericano." },
+  { category: "Cine", question: "¿En qué película aparece el personaje Woody?", options: ["Toy Story", "Shrek", "Cars", "Frozen"], answer: "Toy Story", explanation: "Woody es uno de los protagonistas de Toy Story." },
+
+  { category: "Historia", question: "¿Cuál fue la primera civilización en Mesopotamia?", options: ["Sumeria", "Egipcia", "Persa", "Fenicia"], answer: "Sumeria", explanation: "Los sumerios son de las civilizaciones más antiguas." },
+  { category: "Ciencia", question: "¿Cuántos huesos tiene aproximadamente el cuerpo humano adulto?", options: ["206", "180", "250", "300"], answer: "206", explanation: "Un adulto tiene en promedio 206 huesos." },
+  { category: "Geografía", question: "¿Cuál es el desierto más grande del mundo?", options: ["Antártico", "Sahara", "Arabia", "Gobi"], answer: "Antártico", explanation: "Si contamos desiertos fríos, el antártico es el mayor." },
+  { category: "Arte", question: "¿Qué país vio nacer a Frida Kahlo?", options: ["México", "España", "Argentina", "Perú"], answer: "México", explanation: "Frida Kahlo nació en Coyoacán, México." },
+  { category: "Música", question: "¿Cuál es el rango vocal más agudo en voces femeninas?", options: ["Soprano", "Alto", "Tenor", "Barítono"], answer: "Soprano", explanation: "La soprano es la voz femenina más aguda." },
+  { category: "Tecnología", question: "¿Qué significa Wi‑Fi?", options: ["No es un acrónimo oficial estandarizado", "Wireless Fidelity", "Wide Fiber", "Web Finder"], answer: "No es un acrónimo oficial estandarizado", explanation: "Popularmente se asocia a Wireless Fidelity, pero técnicamente es marca comercial." },
+  { category: "Deportes", question: "¿Qué deporte practica Rafael Nadal?", options: ["Tenis", "Golf", "Fórmula 1", "Atletismo"], answer: "Tenis", explanation: "Nadal es uno de los mejores tenistas de la historia." },
+  { category: "Naturaleza", question: "¿Qué órgano bombea sangre en el cuerpo humano?", options: ["Corazón", "Pulmón", "Hígado", "Riñón"], answer: "Corazón", explanation: "El corazón impulsa la sangre por el sistema circulatorio." },
+  { category: "Literatura", question: "¿Quién escribió 'Orgullo y prejuicio'?", options: ["Jane Austen", "Emily Brontë", "Mary Shelley", "Virginia Woolf"], answer: "Jane Austen", explanation: "Novela clásica publicada en 1813." },
+  { category: "Cine", question: "¿Qué película tiene el lema 'Hakuna Matata'?", options: ["El Rey León", "Madagascar", "Tarzán", "Bambi"], answer: "El Rey León", explanation: "Hakuna Matata aparece en El Rey León." },
+
+  { category: "Historia", question: "¿Qué conflicto ocurrió entre 1914 y 1918?", options: ["Primera Guerra Mundial", "Segunda Guerra Mundial", "Guerra Fría", "Guerra de Crimea"], answer: "Primera Guerra Mundial", explanation: "La Primera Guerra Mundial transcurrió de 1914 a 1918." },
+  { category: "Ciencia", question: "¿Cuál es la unidad básica de la vida?", options: ["Célula", "Átomo", "Molécula", "Tejido"], answer: "Célula", explanation: "La célula es la unidad estructural y funcional de los seres vivos." },
+  { category: "Geografía", question: "¿Cuál es la capital de Italia?", options: ["Roma", "Milán", "Venecia", "Nápoles"], answer: "Roma", explanation: "Roma es la capital italiana." },
+  { category: "Arte", question: "¿Qué arquitecto diseñó gran parte de obras modernistas en Barcelona como la Sagrada Familia?", options: ["Antoni Gaudí", "Le Corbusier", "Frank Gehry", "Mies van der Rohe"], answer: "Antoni Gaudí", explanation: "Gaudí es figura clave del modernismo catalán." },
+  { category: "Música", question: "¿Qué instrumento tiene teclas blancas y negras y suele usarse en música clásica?", options: ["Piano", "Cello", "Saxofón", "Arpa"], answer: "Piano", explanation: "El piano destaca por su teclado característico." },
+  { category: "Tecnología", question: "¿Qué compañía creó el iPhone?", options: ["Apple", "Samsung", "Nokia", "Xiaomi"], answer: "Apple", explanation: "Apple lanzó el primer iPhone en 2007." },
+  { category: "Deportes", question: "¿En qué deporte destaca Michael Jordan?", options: ["Baloncesto", "Béisbol", "Fútbol americano", "Hockey"], answer: "Baloncesto", explanation: "Jordan es leyenda de la NBA." },
+  { category: "Naturaleza", question: "¿Qué parte de la planta absorbe agua y minerales?", options: ["Raíz", "Hoja", "Flor", "Tallo"], answer: "Raíz", explanation: "Las raíces captan agua y nutrientes del suelo." },
+  { category: "Literatura", question: "¿Quién escribió 'La metamorfosis'?", options: ["Franz Kafka", "Thomas Mann", "Hermann Hesse", "Goethe"], answer: "Franz Kafka", explanation: "Publicada en 1915, es una obra clave de Kafka." },
+  { category: "Cine", question: "¿Qué película de ciencia ficción incluye a Neo?", options: ["Matrix", "Blade Runner", "Interstellar", "Inception"], answer: "Matrix", explanation: "Neo es el protagonista de Matrix." },
+
+  { category: "Historia", question: "¿Cuál era la capital del Imperio romano?", options: ["Roma", "Atenas", "Cartago", "Constantinopla"], answer: "Roma", explanation: "Roma fue centro político del Imperio romano." },
+  { category: "Ciencia", question: "¿Qué tipo de energía utiliza paneles solares fotovoltaicos?", options: ["Solar", "Eólica", "Geotérmica", "Mareomotriz"], answer: "Solar", explanation: "Los paneles fotovoltaicos convierten luz solar en electricidad." },
+  { category: "Geografía", question: "¿Cuál es el continente con más países?", options: ["África", "Asia", "Europa", "América"], answer: "África", explanation: "África tiene el mayor número de estados soberanos." },
+  { category: "Arte", question: "¿Qué técnica usa pequeñas piezas para formar imágenes, común en arquitectura antigua?", options: ["Mosaico", "Grabado", "Fresco", "Collage"], answer: "Mosaico", explanation: "El mosaico se construye con teselas." },
+  { category: "Música", question: "¿Cuál es el nombre de la nota que sigue después de 'Do'?", options: ["Re", "Mi", "Fa", "Si"], answer: "Re", explanation: "En la escala natural: Do, Re, Mi, Fa, Sol, La, Si." },
+  { category: "Tecnología", question: "¿Qué es una contraseña segura?", options: ["Combinación larga con letras, números y símbolos", "Tu fecha de nacimiento", "123456", "Tu nombre"], answer: "Combinación larga con letras, números y símbolos", explanation: "Las contraseñas complejas reducen riesgo de acceso no autorizado." },
+  { category: "Deportes", question: "¿Cuántos hoyos tiene una ronda estándar de golf?", options: ["18", "9", "12", "24"], answer: "18", explanation: "Una ronda oficial completa suele ser de 18 hoyos." },
+  { category: "Naturaleza", question: "¿Qué capa de la atmósfera contiene la capa de ozono?", options: ["Estratósfera", "Troposfera", "Mesosfera", "Termosfera"], answer: "Estratósfera", explanation: "La mayor concentración de ozono está en la estratósfera." },
+  { category: "Literatura", question: "¿Quién escribió 'Fahrenheit 451'?", options: ["Ray Bradbury", "Isaac Asimov", "Philip K. Dick", "Arthur C. Clarke"], answer: "Ray Bradbury", explanation: "Fahrenheit 451 es una novela distópica de 1953." },
+  { category: "Cine", question: "¿Qué película animada transcurre en el Día de Muertos y tiene a Miguel como protagonista?", options: ["Coco", "Encanto", "Soul", "Luca"], answer: "Coco", explanation: "Coco explora tradiciones mexicanas del Día de Muertos." },
+];
+
+const state = {
+  index: 0,
+  score: 0,
+  player: "Jugador",
+  shuffled: []
+};
+
+const startScreen = document.getElementById("start-screen");
+const quizScreen = document.getElementById("quiz-screen");
+const endScreen = document.getElementById("end-screen");
+const startBtn = document.getElementById("start-btn");
+const restartBtn = document.getElementById("restart-btn");
+const nextBtn = document.getElementById("next-btn");
+const questionText = document.getElementById("question-text");
+const optionsWrap = document.getElementById("options");
+const feedbackBox = document.getElementById("feedback");
+const categoryBadge = document.getElementById("category");
+const progress = document.getElementById("progress");
+const score = document.getElementById("score");
+const finalMessage = document.getElementById("final-message");
+const playerTag = document.getElementById("player-tag");
+const playerNameInput = document.getElementById("player-name");
+
+function shuffle(array) {
+  const copy = [...array];
+  for (let i = copy.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function startGame() {
+  state.index = 0;
+  state.score = 0;
+  state.player = playerNameInput.value.trim() || "Jugador";
+  state.shuffled = shuffle(questions);
+
+  playerTag.textContent = `👤 ${state.player}`;
+  startScreen.classList.add("hidden");
+  endScreen.classList.add("hidden");
+  quizScreen.classList.remove("hidden");
+
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const current = state.shuffled[state.index];
+  questionText.textContent = current.question;
+  categoryBadge.textContent = current.category;
+  progress.textContent = `${state.index + 1} / ${state.shuffled.length}`;
+  score.textContent = `Puntos: ${state.score}`;
+
+  feedbackBox.className = "feedback hidden";
+  feedbackBox.innerHTML = "";
+  nextBtn.classList.add("hidden");
+  optionsWrap.innerHTML = "";
+
+  shuffle(current.options).forEach((option) => {
+    const btn = document.createElement("button");
+    btn.className = "option-btn";
+    btn.textContent = option;
+    btn.addEventListener("click", () => handleAnswer(btn, option, current));
+    optionsWrap.appendChild(btn);
+  });
+}
+
+function handleAnswer(button, selected, current) {
+  const buttons = [...optionsWrap.querySelectorAll("button")];
+  const isCorrect = selected === current.answer;
+
+  buttons.forEach((btn) => {
+    btn.disabled = true;
+    if (btn.textContent === current.answer) btn.classList.add("correct");
+  });
+
+  if (!isCorrect) {
+    button.classList.add("wrong");
+    feedbackBox.className = "feedback bad";
+    feedbackBox.innerHTML = `❌ <strong>Ups.</strong> La respuesta correcta es <strong>${current.answer}</strong>.<br>${current.explanation}`;
+  } else {
+    state.score += 1;
+    score.textContent = `Puntos: ${state.score}`;
+    feedbackBox.className = "feedback ok";
+    feedbackBox.innerHTML = `✅ <strong>¡Bien!</strong> ${current.explanation}`;
+  }
+
+  nextBtn.classList.remove("hidden");
+}
+
+function nextQuestion() {
+  state.index += 1;
+  if (state.index < state.shuffled.length) {
+    renderQuestion();
+    return;
+  }
+
+  quizScreen.classList.add("hidden");
+  endScreen.classList.remove("hidden");
+
+  const percent = Math.round((state.score / state.shuffled.length) * 100);
+  let vibe = "Buen intento. Sigue practicando y subes ese marcador 🔥";
+  if (percent >= 90) vibe = "¡Nivel leyenda! Eres crack total 🏆";
+  else if (percent >= 70) vibe = "¡Muy pro! Ya tienes gran nivel 😎";
+  else if (percent >= 50) vibe = "Vas muy bien, un poco más y la rompes ✨";
+
+  finalMessage.textContent = `${state.player}, obtuviste ${state.score}/${state.shuffled.length} (${percent}%). ${vibe}`;
+}
+
+startBtn.addEventListener("click", startGame);
+restartBtn.addEventListener("click", startGame);
+nextBtn.addEventListener("click", nextQuestion);

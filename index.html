@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Preguntados Chill · 100 preguntas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="card" id="start-screen">
+        <h1>🎮 Preguntados Chill</h1>
+        <p>
+          Juego visual de trivia con <strong>100 preguntas</strong>. Elige la respuesta correcta y
+          recibe retro si te equivocas.
+        </p>
+        <label for="player-name">Tu nombre (opcional)</label>
+        <input id="player-name" type="text" placeholder="Ej. Alex" maxlength="20" />
+        <button id="start-btn">Empezar partida</button>
+      </section>
+
+      <section class="card hidden" id="quiz-screen">
+        <div class="top-bar">
+          <div>
+            <span id="player-tag">Jugador</span>
+            <span class="badge" id="category">Categoría</span>
+          </div>
+          <div>
+            <span id="progress">1 / 100</span>
+            <span id="score">Puntos: 0</span>
+          </div>
+        </div>
+
+        <h2 id="question-text">Pregunta</h2>
+        <div id="options" class="options"></div>
+
+        <div id="feedback" class="feedback hidden"></div>
+        <button id="next-btn" class="hidden">Siguiente</button>
+      </section>
+
+      <section class="card hidden" id="end-screen">
+        <h2>🏁 Fin de la partida</h2>
+        <p id="final-message"></p>
+        <button id="restart-btn">Jugar de nuevo</button>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
