@@ -1,5 +1,4 @@
 :root {
-  --bg: #090b1a;
   --card: rgba(13, 18, 45, 0.88);
   --text: #f5f7ff;
   --muted: #b8bfe4;
@@ -15,7 +14,7 @@
 
 body {
   margin: 0;
-  font-family: "Nunito", system-ui, sans-serif;
+  font-family: 'Nunito', system-ui, sans-serif;
   min-height: 100vh;
   color: var(--text);
   background: radial-gradient(circle at top, #1d255f 0%, #090b1a 45%, #03040b 100%);
@@ -96,6 +95,10 @@ button:disabled {
   padding: 0.15rem 0.6rem;
 }
 
+.score {
+  margin-left: 0.75rem;
+}
+
 .options {
   display: grid;
   gap: 0.75rem;
@@ -131,8 +134,4 @@ button:disabled {
 
 .feedback.bad {
   border-color: var(--bad);
-}
-
-.hidden {
-  display: none;
 }
