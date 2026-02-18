@@ -1,111 +1,227 @@
-export const questions = [
-  { category: "Historia", question: "¿En qué año llegó el ser humano a la Luna?", options: ["1969", "1958", "1975", "1981"], answer: "1969", explanation: "La misión Apolo 11 alunizó el 20 de julio de 1969." },
-  { category: "Ciencia", question: "¿Cuál es el planeta más grande del sistema solar?", options: ["Júpiter", "Saturno", "Tierra", "Marte"], answer: "Júpiter", explanation: "Júpiter es el planeta con mayor masa y diámetro." },
-  { category: "Geografía", question: "¿Cuál es la capital de Australia?", options: ["Canberra", "Sídney", "Melbourne", "Perth"], answer: "Canberra", explanation: "Aunque Sídney es famosa, la capital oficial es Canberra." },
-  { category: "Arte", question: "¿Quién pintó la Mona Lisa?", options: ["Leonardo da Vinci", "Picasso", "Van Gogh", "Miguel Ángel"], answer: "Leonardo da Vinci", explanation: "La Gioconda fue pintada por Leonardo da Vinci." },
-  { category: "Música", question: "¿Cuántas cuerdas tiene una guitarra clásica?", options: ["6", "4", "7", "12"], answer: "6", explanation: "La guitarra clásica estándar tiene seis cuerdas." },
-  { category: "Tecnología", question: "¿Qué significa HTML?", options: ["HyperText Markup Language", "HighText Machine Language", "Home Tool Markup Language", "Hyper Transfer Main Link"], answer: "HyperText Markup Language", explanation: "HTML es el lenguaje de marcado base de la web." },
-  { category: "Deportes", question: "¿Cuántos jugadores por equipo hay en cancha en baloncesto?", options: ["5", "6", "7", "4"], answer: "5", explanation: "En juego oficial hay cinco por equipo en cancha." },
-  { category: "Naturaleza", question: "¿Qué gas respiramos principalmente del aire para vivir?", options: ["Oxígeno", "Nitrógeno", "Dióxido de carbono", "Helio"], answer: "Oxígeno", explanation: "El oxígeno es esencial para la respiración celular humana." },
-  { category: "Literatura", question: "¿Quién escribió 'Cien años de soledad'?", options: ["Gabriel García Márquez", "Julio Cortázar", "Mario Vargas Llosa", "Pablo Neruda"], answer: "Gabriel García Márquez", explanation: "La novela fue publicada en 1967 por Gabo." },
-  { category: "Cine", question: "¿Qué película incluye el personaje Jack Sparrow?", options: ["Piratas del Caribe", "Titanic", "Avatar", "Gladiador"], answer: "Piratas del Caribe", explanation: "Jack Sparrow es protagonista en Piratas del Caribe." },
-
-  { category: "Historia", question: "¿Qué civilización construyó Machu Picchu?", options: ["Inca", "Maya", "Azteca", "Romana"], answer: "Inca", explanation: "Machu Picchu fue construido por el Imperio inca." },
-  { category: "Ciencia", question: "¿Cuál es el símbolo químico del oro?", options: ["Au", "Ag", "O", "Go"], answer: "Au", explanation: "Au viene del latín aurum." },
-  { category: "Geografía", question: "¿Cuál es el río más largo del mundo (aceptado comúnmente en muchos textos escolares)?", options: ["Nilo", "Amazonas", "Yangtsé", "Misisipi"], answer: "Nilo", explanation: "En muchas referencias escolares se enseña el Nilo como el más largo." },
-  { category: "Arte", question: "¿Qué estilo artístico practicó Salvador Dalí?", options: ["Surrealismo", "Cubismo", "Barroco", "Impresionismo"], answer: "Surrealismo", explanation: "Dalí es una figura icónica del surrealismo." },
-  { category: "Música", question: "¿Qué instrumento tocaba principalmente Ludwig van Beethoven?", options: ["Piano", "Violín", "Flauta", "Batería"], answer: "Piano", explanation: "Beethoven fue compositor y pianista." },
-  { category: "Tecnología", question: "¿Qué empresa desarrolla el sistema operativo Android?", options: ["Google", "Apple", "Microsoft", "Meta"], answer: "Google", explanation: "Android es desarrollado por Google." },
-  { category: "Deportes", question: "¿Cuánto dura un partido de fútbol profesional?", options: ["90 minutos", "60 minutos", "80 minutos", "120 minutos"], answer: "90 minutos", explanation: "Se divide en dos tiempos de 45 minutos." },
-  { category: "Naturaleza", question: "¿Cuál es el mamífero más grande del planeta?", options: ["Ballena azul", "Elefante africano", "Jirafa", "Hipopótamo"], answer: "Ballena azul", explanation: "La ballena azul puede superar los 25 metros." },
-  { category: "Literatura", question: "¿Quién escribió Don Quijote de la Mancha?", options: ["Miguel de Cervantes", "Lope de Vega", "Góngora", "Quevedo"], answer: "Miguel de Cervantes", explanation: "Cervantes publicó la primera parte en 1605." },
-  { category: "Cine", question: "¿Qué saga tiene un villano llamado Darth Vader?", options: ["Star Wars", "Harry Potter", "Matrix", "Dune"], answer: "Star Wars", explanation: "Darth Vader es uno de los personajes centrales de Star Wars." },
-
-  { category: "Historia", question: "¿Qué muro cayó en 1989?", options: ["Muro de Berlín", "Muro de Adriano", "Gran Muralla", "Muro de los Lamentos"], answer: "Muro de Berlín", explanation: "Su caída marcó el fin simbólico de la Guerra Fría en Europa." },
-  { category: "Ciencia", question: "¿Qué parte de la célula contiene el ADN en eucariotas?", options: ["Núcleo", "Citoplasma", "Membrana", "Ribosoma"], answer: "Núcleo", explanation: "En células eucariotas el ADN está principalmente en el núcleo." },
-  { category: "Geografía", question: "¿Cuál es el océano más grande?", options: ["Pacífico", "Atlántico", "Índico", "Ártico"], answer: "Pacífico", explanation: "El océano Pacífico es el de mayor extensión." },
-  { category: "Arte", question: "¿En qué museo está la Mona Lisa?", options: ["Louvre", "Prado", "Met", "Uffizi"], answer: "Louvre", explanation: "El Louvre en París alberga esta obra." },
-  { category: "Música", question: "¿Qué cantante es conocido como el 'Rey del Pop'?", options: ["Michael Jackson", "Elvis Presley", "Prince", "Freddie Mercury"], answer: "Michael Jackson", explanation: "Michael Jackson recibió ese apodo mundialmente." },
-  { category: "Tecnología", question: "¿Cuál de estos es un lenguaje de programación?", options: ["Python", "Photoshop", "Excel", "Chrome"], answer: "Python", explanation: "Python es un lenguaje de propósito general." },
-  { category: "Deportes", question: "¿Qué país ganó el Mundial de fútbol de 2022?", options: ["Argentina", "Francia", "Brasil", "Croacia"], answer: "Argentina", explanation: "Argentina ganó la final ante Francia en Catar." },
-  { category: "Naturaleza", question: "¿Cuál es el proceso por el que las plantas producen su alimento?", options: ["Fotosíntesis", "Respiración", "Fermentación", "Evaporación"], answer: "Fotosíntesis", explanation: "Usan luz solar, agua y CO₂ para producir glucosa." },
-  { category: "Literatura", question: "¿Quién escribió 'La Odisea'?", options: ["Homero", "Sófocles", "Virgilio", "Platón"], answer: "Homero", explanation: "La Odisea es una epopeya atribuida a Homero." },
-  { category: "Cine", question: "¿Quién dirigió 'Titanic' (1997)?", options: ["James Cameron", "Steven Spielberg", "Ridley Scott", "Christopher Nolan"], answer: "James Cameron", explanation: "James Cameron escribió y dirigió Titanic." },
-
-  { category: "Historia", question: "¿Quién fue el primer presidente de Estados Unidos?", options: ["George Washington", "Abraham Lincoln", "John Adams", "Thomas Jefferson"], answer: "George Washington", explanation: "Washington fue elegido en 1789." },
-  { category: "Ciencia", question: "¿Qué planeta es conocido como el planeta rojo?", options: ["Marte", "Venus", "Mercurio", "Júpiter"], answer: "Marte", explanation: "Su tonalidad rojiza se debe al óxido de hierro." },
-  { category: "Geografía", question: "¿Cuál es el país más grande del mundo por superficie?", options: ["Rusia", "Canadá", "China", "Estados Unidos"], answer: "Rusia", explanation: "Rusia es el país más extenso del planeta." },
-  { category: "Arte", question: "¿Quién pintó 'La noche estrellada'?", options: ["Vincent van Gogh", "Monet", "Rembrandt", "Kandinsky"], answer: "Vincent van Gogh", explanation: "Es una de sus obras más reconocidas." },
-  { category: "Música", question: "¿Qué cantante colombiana lanzó 'Hips Don't Lie'?", options: ["Shakira", "Karol G", "Paulina Rubio", "Aitana"], answer: "Shakira", explanation: "La canción de 2006 fue éxito global." },
-  { category: "Tecnología", question: "¿Qué significa CPU?", options: ["Central Processing Unit", "Computer Personal Unit", "Control Program Utility", "Core Power Unit"], answer: "Central Processing Unit", explanation: "La CPU ejecuta instrucciones del sistema." },
-  { category: "Deportes", question: "¿En qué deporte se usa un 'birdie' o volante?", options: ["Bádminton", "Tenis", "Ping-pong", "Squash"], answer: "Bádminton", explanation: "El birdie es el proyectil del bádminton." },
-  { category: "Naturaleza", question: "¿Qué vitamina produce la piel con ayuda del sol?", options: ["Vitamina D", "Vitamina C", "Vitamina A", "Vitamina K"], answer: "Vitamina D", explanation: "La exposición solar favorece su síntesis." },
-  { category: "Literatura", question: "¿Quién escribió '1984'?", options: ["George Orwell", "Aldous Huxley", "Ray Bradbury", "Jules Verne"], answer: "George Orwell", explanation: "1984 es una novela distópica de Orwell." },
-  { category: "Cine", question: "¿Cuál es la película animada de Pixar sobre emociones?", options: ["Intensa-Mente", "Coco", "Up", "Toy Story"], answer: "Intensa-Mente", explanation: "Inside Out (Intensa-Mente) trata las emociones humanas." },
-
-  { category: "Historia", question: "¿Qué imperio gobernó gran parte de América antes de la llegada española en México central?", options: ["Azteca", "Inca", "Maya", "Olmeca"], answer: "Azteca", explanation: "El imperio mexica o azteca dominaba la región." },
-  { category: "Ciencia", question: "¿Cuál es el metal líquido a temperatura ambiente?", options: ["Mercurio", "Hierro", "Plata", "Cobre"], answer: "Mercurio", explanation: "El mercurio permanece líquido a temperatura ambiente." },
-  { category: "Geografía", question: "¿Qué cordillera separa gran parte de Chile y Argentina?", options: ["Andes", "Alpes", "Himalaya", "Apalaches"], answer: "Andes", explanation: "La Cordillera de los Andes recorre Sudamérica." },
-  { category: "Arte", question: "¿Qué artista es famoso por el mural 'Guernica'?", options: ["Pablo Picasso", "Dalí", "Miró", "Goya"], answer: "Pablo Picasso", explanation: "Guernica fue pintado por Picasso en 1937." },
-  { category: "Música", question: "¿Qué género popularizó Bob Marley?", options: ["Reggae", "Salsa", "Blues", "Tango"], answer: "Reggae", explanation: "Bob Marley es ícono mundial del reggae." },
-  { category: "Tecnología", question: "¿Qué red social se caracteriza por videos cortos virales?", options: ["TikTok", "LinkedIn", "Reddit", "Pinterest"], answer: "TikTok", explanation: "TikTok popularizó el formato de clips cortos." },
-  { category: "Deportes", question: "¿Cuántos sets se necesitan para ganar un partido de tenis masculino en Grand Slam?", options: ["3 sets", "2 sets", "4 sets", "5 sets"], answer: "3 sets", explanation: "Se juega al mejor de cinco; gana quien logra tres." },
-  { category: "Naturaleza", question: "¿Qué animal es conocido como el rey de la selva?", options: ["León", "Tigre", "Jaguar", "Lobo"], answer: "León", explanation: "Tradicionalmente el león recibe ese título." },
-  { category: "Literatura", question: "¿Quién escribió 'El principito'?", options: ["Antoine de Saint-Exupéry", "Victor Hugo", "Albert Camus", "J.K. Rowling"], answer: "Antoine de Saint-Exupéry", explanation: "El principito se publicó en 1943." },
-  { category: "Cine", question: "¿Qué actor interpreta a Iron Man en Marvel?", options: ["Robert Downey Jr.", "Chris Evans", "Chris Hemsworth", "Mark Ruffalo"], answer: "Robert Downey Jr.", explanation: "Interpretó a Tony Stark durante más de una década." },
-
-  { category: "Historia", question: "¿Qué país inició la Revolución Industrial?", options: ["Reino Unido", "Francia", "Alemania", "Italia"], answer: "Reino Unido", explanation: "Comenzó en Gran Bretaña en el siglo XVIII." },
-  { category: "Ciencia", question: "¿Cuál es el satélite natural de la Tierra?", options: ["Luna", "Fobos", "Europa", "Titán"], answer: "Luna", explanation: "La Tierra tiene un satélite natural principal: la Luna." },
-  { category: "Geografía", question: "¿Cuál es la capital de Japón?", options: ["Tokio", "Kioto", "Osaka", "Nara"], answer: "Tokio", explanation: "Tokio es la capital y mayor área metropolitana de Japón." },
-  { category: "Arte", question: "¿Qué movimiento artístico incluye a Monet y Renoir?", options: ["Impresionismo", "Futurismo", "Neoclasicismo", "Dadaísmo"], answer: "Impresionismo", explanation: "Monet y Renoir fueron pintores impresionistas." },
-  { category: "Música", question: "¿Cuál es la clave de sol en música?", options: ["Un símbolo para notas agudas", "Un instrumento", "Una escala", "Un compás"], answer: "Un símbolo para notas agudas", explanation: "La clave de sol indica la posición del sol en el pentagrama." },
-  { category: "Tecnología", question: "¿Qué significa URL?", options: ["Uniform Resource Locator", "Universal Route Link", "Unified Resource Line", "User Remote Link"], answer: "Uniform Resource Locator", explanation: "Es la dirección de un recurso en internet." },
-  { category: "Deportes", question: "¿Qué país es famoso por inventar el sumo?", options: ["Japón", "China", "Corea", "Tailandia"], answer: "Japón", explanation: "El sumo es un deporte tradicional japonés." },
-  { category: "Naturaleza", question: "¿Qué ave no puede volar y habita la Antártida?", options: ["Pingüino", "Albatros", "Cóndor", "Pelícano"], answer: "Pingüino", explanation: "Los pingüinos están adaptados al nado, no al vuelo." },
-  { category: "Literatura", question: "¿Quién escribió 'Harry Potter'?", options: ["J.K. Rowling", "Suzanne Collins", "Stephen King", "J.R.R. Tolkien"], answer: "J.K. Rowling", explanation: "Rowling es la autora de la saga." },
-  { category: "Cine", question: "¿Qué película ganó el Oscar a Mejor Película en 2020?", options: ["Parasite", "1917", "Joker", "Ford v Ferrari"], answer: "Parasite", explanation: "Parasite ganó en 2020 y marcó un hito para el cine coreano." },
-
-  { category: "Historia", question: "¿Qué navegante llegó a América en 1492?", options: ["Cristóbal Colón", "Magallanes", "Américo Vespucio", "Vasco da Gama"], answer: "Cristóbal Colón", explanation: "Colón llegó al continente americano en 1492." },
-  { category: "Ciencia", question: "¿Qué instrumento mide terremotos?", options: ["Sismógrafo", "Barómetro", "Termómetro", "Anemómetro"], answer: "Sismógrafo", explanation: "El sismógrafo registra movimientos sísmicos." },
-  { category: "Geografía", question: "¿Cuál es la capital de México?", options: ["Ciudad de México", "Guadalajara", "Monterrey", "Puebla"], answer: "Ciudad de México", explanation: "CDMX es la capital del país." },
-  { category: "Arte", question: "¿Quién pintó 'La última cena'?", options: ["Leonardo da Vinci", "Rafael", "Caravaggio", "Velázquez"], answer: "Leonardo da Vinci", explanation: "El mural está en Santa Maria delle Grazie, Milán." },
-  { category: "Música", question: "¿Qué cantante es llamada 'La Reina del Pop'?", options: ["Madonna", "Beyoncé", "Adele", "Rihanna"], answer: "Madonna", explanation: "Madonna es conocida por ese apodo en la cultura pop." },
-  { category: "Tecnología", question: "¿Cuál de estos es un navegador web?", options: ["Firefox", "Figma", "Slack", "VSCode"], answer: "Firefox", explanation: "Firefox es un navegador desarrollado por Mozilla." },
-  { category: "Deportes", question: "¿Cuántos anillos olímpicos hay en el símbolo oficial?", options: ["5", "4", "6", "7"], answer: "5", explanation: "Representan los continentes habitados." },
-  { category: "Naturaleza", question: "¿Cuál es el proceso del agua que sube en forma de vapor?", options: ["Evaporación", "Condensación", "Precipitación", "Sublimación"], answer: "Evaporación", explanation: "La evaporación transforma agua líquida en vapor." },
-  { category: "Literatura", question: "¿Quién escribió 'Rayuela'?", options: ["Julio Cortázar", "Borges", "Sabato", "Neruda"], answer: "Julio Cortázar", explanation: "Rayuela es una novela emblemática del boom latinoamericano." },
-  { category: "Cine", question: "¿En qué película aparece el personaje Woody?", options: ["Toy Story", "Shrek", "Cars", "Frozen"], answer: "Toy Story", explanation: "Woody es uno de los protagonistas de Toy Story." },
-
-  { category: "Historia", question: "¿Cuál fue la primera civilización en Mesopotamia?", options: ["Sumeria", "Egipcia", "Persa", "Fenicia"], answer: "Sumeria", explanation: "Los sumerios son de las civilizaciones más antiguas." },
-  { category: "Ciencia", question: "¿Cuántos huesos tiene aproximadamente el cuerpo humano adulto?", options: ["206", "180", "250", "300"], answer: "206", explanation: "Un adulto tiene en promedio 206 huesos." },
-  { category: "Geografía", question: "¿Cuál es el desierto más grande del mundo?", options: ["Antártico", "Sahara", "Arabia", "Gobi"], answer: "Antártico", explanation: "Si contamos desiertos fríos, el antártico es el mayor." },
-  { category: "Arte", question: "¿Qué país vio nacer a Frida Kahlo?", options: ["México", "España", "Argentina", "Perú"], answer: "México", explanation: "Frida Kahlo nació en Coyoacán, México." },
-  { category: "Música", question: "¿Cuál es el rango vocal más agudo en voces femeninas?", options: ["Soprano", "Alto", "Tenor", "Barítono"], answer: "Soprano", explanation: "La soprano es la voz femenina más aguda." },
-  { category: "Tecnología", question: "¿Qué significa Wi‑Fi?", options: ["No es un acrónimo oficial estandarizado", "Wireless Fidelity", "Wide Fiber", "Web Finder"], answer: "No es un acrónimo oficial estandarizado", explanation: "Popularmente se asocia a Wireless Fidelity, pero técnicamente es marca comercial." },
-  { category: "Deportes", question: "¿Qué deporte practica Rafael Nadal?", options: ["Tenis", "Golf", "Fórmula 1", "Atletismo"], answer: "Tenis", explanation: "Nadal es uno de los mejores tenistas de la historia." },
-  { category: "Naturaleza", question: "¿Qué órgano bombea sangre en el cuerpo humano?", options: ["Corazón", "Pulmón", "Hígado", "Riñón"], answer: "Corazón", explanation: "El corazón impulsa la sangre por el sistema circulatorio." },
-  { category: "Literatura", question: "¿Quién escribió 'Orgullo y prejuicio'?", options: ["Jane Austen", "Emily Brontë", "Mary Shelley", "Virginia Woolf"], answer: "Jane Austen", explanation: "Novela clásica publicada en 1813." },
-  { category: "Cine", question: "¿Qué película tiene el lema 'Hakuna Matata'?", options: ["El Rey León", "Madagascar", "Tarzán", "Bambi"], answer: "El Rey León", explanation: "Hakuna Matata aparece en El Rey León." },
-
-  { category: "Historia", question: "¿Qué conflicto ocurrió entre 1914 y 1918?", options: ["Primera Guerra Mundial", "Segunda Guerra Mundial", "Guerra Fría", "Guerra de Crimea"], answer: "Primera Guerra Mundial", explanation: "La Primera Guerra Mundial transcurrió de 1914 a 1918." },
-  { category: "Ciencia", question: "¿Cuál es la unidad básica de la vida?", options: ["Célula", "Átomo", "Molécula", "Tejido"], answer: "Célula", explanation: "La célula es la unidad estructural y funcional de los seres vivos." },
-  { category: "Geografía", question: "¿Cuál es la capital de Italia?", options: ["Roma", "Milán", "Venecia", "Nápoles"], answer: "Roma", explanation: "Roma es la capital italiana." },
-  { category: "Arte", question: "¿Qué arquitecto diseñó gran parte de obras modernistas en Barcelona como la Sagrada Familia?", options: ["Antoni Gaudí", "Le Corbusier", "Frank Gehry", "Mies van der Rohe"], answer: "Antoni Gaudí", explanation: "Gaudí es figura clave del modernismo catalán." },
-  { category: "Música", question: "¿Qué instrumento tiene teclas blancas y negras y suele usarse en música clásica?", options: ["Piano", "Cello", "Saxofón", "Arpa"], answer: "Piano", explanation: "El piano destaca por su teclado característico." },
-  { category: "Tecnología", question: "¿Qué compañía creó el iPhone?", options: ["Apple", "Samsung", "Nokia", "Xiaomi"], answer: "Apple", explanation: "Apple lanzó el primer iPhone en 2007." },
-  { category: "Deportes", question: "¿En qué deporte destaca Michael Jordan?", options: ["Baloncesto", "Béisbol", "Fútbol americano", "Hockey"], answer: "Baloncesto", explanation: "Jordan es leyenda de la NBA." },
-  { category: "Naturaleza", question: "¿Qué parte de la planta absorbe agua y minerales?", options: ["Raíz", "Hoja", "Flor", "Tallo"], answer: "Raíz", explanation: "Las raíces captan agua y nutrientes del suelo." },
-  { category: "Literatura", question: "¿Quién escribió 'La metamorfosis'?", options: ["Franz Kafka", "Thomas Mann", "Hermann Hesse", "Goethe"], answer: "Franz Kafka", explanation: "Publicada en 1915, es una obra clave de Kafka." },
-  { category: "Cine", question: "¿Qué película de ciencia ficción incluye a Neo?", options: ["Matrix", "Blade Runner", "Interstellar", "Inception"], answer: "Matrix", explanation: "Neo es el protagonista de Matrix." },
-
-  { category: "Historia", question: "¿Cuál era la capital del Imperio romano?", options: ["Roma", "Atenas", "Cartago", "Constantinopla"], answer: "Roma", explanation: "Roma fue centro político del Imperio romano." },
-  { category: "Ciencia", question: "¿Qué tipo de energía utiliza paneles solares fotovoltaicos?", options: ["Solar", "Eólica", "Geotérmica", "Mareomotriz"], answer: "Solar", explanation: "Los paneles fotovoltaicos convierten luz solar en electricidad." },
-  { category: "Geografía", question: "¿Cuál es el continente con más países?", options: ["África", "Asia", "Europa", "América"], answer: "África", explanation: "África tiene el mayor número de estados soberanos." },
-  { category: "Arte", question: "¿Qué técnica usa pequeñas piezas para formar imágenes, común en arquitectura antigua?", options: ["Mosaico", "Grabado", "Fresco", "Collage"], answer: "Mosaico", explanation: "El mosaico se construye con teselas." },
-  { category: "Música", question: "¿Cuál es el nombre de la nota que sigue después de 'Do'?", options: ["Re", "Mi", "Fa", "Si"], answer: "Re", explanation: "En la escala natural: Do, Re, Mi, Fa, Sol, La, Si." },
-  { category: "Tecnología", question: "¿Qué es una contraseña segura?", options: ["Combinación larga con letras, números y símbolos", "Tu fecha de nacimiento", "123456", "Tu nombre"], answer: "Combinación larga con letras, números y símbolos", explanation: "Las contraseñas complejas reducen riesgo de acceso no autorizado." },
-  { category: "Deportes", question: "¿Cuántos hoyos tiene una ronda estándar de golf?", options: ["18", "9", "12", "24"], answer: "18", explanation: "Una ronda oficial completa suele ser de 18 hoyos." },
-  { category: "Naturaleza", question: "¿Qué capa de la atmósfera contiene la capa de ozono?", options: ["Estratósfera", "Troposfera", "Mesosfera", "Termosfera"], answer: "Estratósfera", explanation: "La mayor concentración de ozono está en la estratósfera." },
-  { category: "Literatura", question: "¿Quién escribió 'Fahrenheit 451'?", options: ["Ray Bradbury", "Isaac Asimov", "Philip K. Dick", "Arthur C. Clarke"], answer: "Ray Bradbury", explanation: "Fahrenheit 451 es una novela distópica de 1953." },
-  { category: "Cine", question: "¿Qué película animada transcurre en el Día de Muertos y tiene a Miguel como protagonista?", options: ["Coco", "Encanto", "Soul", "Luca"], answer: "Coco", explanation: "Coco explora tradiciones mexicanas del Día de Muertos." },
+const examBlueprint = [
+  {
+    category: 'Diseño de sistemas mecatrónicos',
+    subcategory: 'Sistemas mecánicos',
+    count: 10,
+    items: [
+      ['fatiga en eje con carga alternante', 'criterio de Goodman modificado', ['criterio de Tresca estático', 'ley de Hooke simple', 'criterio de Coulomb para fricción'], 'Goodman integra esfuerzo medio y alternante en diseño a fatiga.'],
+      ['selección de relación de transmisión en reductor', 'igualar velocidad nominal con zona de mayor eficiencia del motor', ['maximizar par sin revisar eficiencia', 'usar la menor relación posible', 'seleccionar por costo sin curva'], 'La relación se elige para operar cerca del punto eficiente del accionamiento.'],
+      ['diseño de unión atornillada sometida a vibración', 'precarga controlada y método de bloqueo', ['aumentar únicamente diámetro', 'reducir longitud del tornillo', 'usar tornillo sin arandela siempre'], 'La vibración afloja uniones si no hay precarga adecuada y seguro mecánico/químico.'],
+      ['análisis modal de estructura de robot', 'separar frecuencia natural de la frecuencia de excitación', ['igualarlas para resonancia útil', 'aumentar masa sin cálculo', 'usar material más blando'], 'El objetivo es evitar resonancia en operación.'],
+      ['diseño de leva para minimizar impacto', 'perfil con continuidad de aceleración', ['perfil triangular de velocidad', 'alzada máxima instantánea', 'contacto puntual sin radio'], 'Suavizar jerk reduce impacto y vibración.'],
+      ['dimensionamiento de guía lineal', 'capacidad dinámica y vida L10', ['solo carga estática máxima', 'longitud del riel', 'peso del carro sin factor'], 'Las guías se seleccionan por vida útil bajo carga equivalente dinámica.'],
+      ['selección de rodamientos en ambiente contaminado', 'sello adecuado y lubricación compatible', ['rodamiento abierto por menor fricción', 'el mayor diámetro disponible', 'jaula plástica sin validar temperatura'], 'El sellado y lubricación dominan la confiabilidad en ambientes severos.'],
+      ['evaluación de rigidez de bastidor', 'deflexión máxima en punto de herramienta', ['masa total del bastidor', 'solo resistencia última', 'coeficiente de Poisson aislado'], 'En máquina-herramienta la rigidez funcional es clave para precisión.'],
+      ['diseño de mecanismo de cuatro barras', 'satisfacer condición de Grashof según función', ['maximizar solo longitud de acoplador', 'fijar barras iguales siempre', 'usar pivotes sin tolerancias'], 'Grashof define posibilidad de rotación completa y tipo de mecanismo.'],
+      ['compensación térmica en sistema mecánico de precisión', 'considerar expansión diferencial de materiales', ['incrementar torque del actuador', 'aumentar velocidad de avance', 'eliminar lubricante'], 'La deriva térmica altera holguras y posicionamiento.']
+    ]
+  },
+  {
+    category: 'Sistemas electrónicos, analógicos, digitales y de potencia',
+    subcategory: 'Dispositivos electrónicos',
+    count: 24,
+    items: [
+      ['diseño de fuente conmutada buck', 'selección de inductor por rizado de corriente', ['solo tensión de salida', 'valor mínimo de ESR del capacitor', 'frecuencia sin ciclo de trabajo'], 'El inductor define rizado, estabilidad y respuesta dinámica.'],
+      ['etapa MOSFET en conmutación rápida', 'minimizar pérdidas de conmutación y conducción', ['operar siempre en región lineal', 'aumentar resistencia de compuerta sin criterio', 'reducir disipador a cero'], 'En potencia se balancean pérdidas dinámicas y estáticas.'],
+      ['aislamiento galvánico en control de potencia', 'optoacoplador o driver aislado', ['divisor resistivo', 'diodo zener en serie', 'filtro RC simple'], 'El aislamiento protege control y usuario de transientes de potencia.'],
+      ['diseño de filtro anti-aliasing', 'frecuencia de corte menor a Nyquist', ['corte por encima de Nyquist', 'eliminar filtro y promediar', 'usar solo software después'], 'El anti-aliasing debe actuar antes del ADC.'],
+      ['amplificador instrumental para sensor de puente', 'alto CMRR', ['ganancia unitaria fija', 'baja impedancia de entrada', 'respuesta no lineal intencional'], 'CMRR alto rechaza modo común en señales de bajo nivel.'],
+      ['protección contra sobretensión en entrada', 'TVS y coordinación de fusible', ['solo resistencia serie', 'solo capacitor a tierra', 'aumentar ganancia del op-amp'], 'TVS sujeta picos y el fusible limita energía de falla.'],
+      ['diseño de PCB para potencia', 'retornos de corriente y plano de tierra controlado', ['pistas largas para disipar', 'separar tierras sin estrategia', 'vías aleatorias'], 'Lazo de corriente pequeño reduce EMI y sobrepicos.'],
+      ['selección de ADC para control fino', 'resolución efectiva (ENOB) y ruido', ['solo número de bits nominal', 'solo velocidad máxima', 'encapsulado más pequeño'], 'ENOB refleja rendimiento real bajo ruido.'],
+      ['modulación PWM de inversor trifásico', 'índice de modulación dentro de región lineal', ['sobre-modular siempre', 'fijar 50% en todas fases', 'usar frecuencia de red en PWM'], 'Controlar el índice evita distorsión excesiva.'],
+      ['medición de corriente en puente H', 'shunt de baja resistencia con amplificación diferencial', ['resistencia alta en serie', 'medición de voltaje de compuerta', 'NTC en disipador'], 'El shunt permite sensado preciso con mínima pérdida.'],
+      ['convertidor boost en arranque', 'limitar corriente de irrupción', ['elevar duty al máximo desde t=0', 'quitar diodo de salida', 'usar inductor saturable a propósito'], 'El inrush puede destruir semiconductores y capacitores.'],
+      ['ruido en señal analógica de baja amplitud', 'blindaje y referencia limpia', ['subir solo ganancia', 'mover cable cerca de variador', 'usar tierra flotante sin retorno'], 'Ruido de modo común y acoplamiento electromagnético deben mitigarse.']
+    ]
+  },
+  {
+    category: 'Sistemas de automatización y control analógico y digital',
+    subcategory: 'Sistemas de control',
+    count: 14,
+    items: [
+      ['sintonía PID en planta con retardo', 'iniciar con método robusto y validar márgenes', ['incrementar Kp al máximo', 'anular derivativa siempre', 'usar solo integral grande'], 'Retardo reduce fase disponible, se requiere robustez.'],
+      ['estabilidad en lazo cerrado', 'todos los polos en semiplano izquierdo', ['cero en origen obligatorio', 'ganancia infinita', 'fase mayor de 360°'], 'La ubicación de polos determina estabilidad BIBO.'],
+      ['control cascada en accionamiento', 'lazo interno rápido de corriente/velocidad', ['lazo externo más rápido', 'un solo lazo integral', 'desacoplar sin medición'], 'La estructura cascada mejora rechazo de perturbaciones.'],
+      ['implementación digital de controlador continuo', 'discretización con periodo de muestreo adecuado', ['usar Ts muy grande', 'ignorar retención ZOH', 'copiar ecuación continua directa'], 'Ts afecta fase y desempeño del controlador discreto.'],
+      ['observador de estados', 'estimación de variables no medidas', ['medición directa de todas las variables', 'eliminación del modelo', 'aumento de ruido blanco'], 'El observador reconstruye estados a partir de entradas y salidas.'],
+      ['compensador adelanto', 'incrementar margen de fase', ['eliminar ruido de alta frecuencia totalmente', 'hacer sistema más lento siempre', 'aumentar error estacionario'], 'Lead mejora velocidad y estabilidad relativa.'],
+      ['control feedforward', 'compensar perturbación medible antes del error', ['sustituir retroalimentación', 'usar solo saturación', 'filtrar referencia con retardo'], 'Feedforward reduce error por perturbaciones conocidas.'],
+      ['anti-windup en PID', 'limitar acumulación integral en saturación', ['aumentar Ki en saturación', 'eliminar saturación física', 'bloquear medición'], 'Evita sobreimpulso y recuperación lenta tras saturación.'],
+      ['control por espacio de estados', 'ubicación de polos y realimentación de estados', ['respuesta solo en frecuencia', 'análisis con tabla verdad', 'filtro pasivo'], 'Permite diseñar dinámica multivariable explícita.'],
+      ['criterio Nyquist', 'evaluar envolvimiento del punto -1', ['cruce de 0 dB únicamente', 'magnitud DC', 'solo polos de lazo cerrado'], 'Nyquist define estabilidad con polos de lazo abierto.']
+    ]
+  },
+  {
+    category: 'Modelado y simulación de sistemas mecatrónicos',
+    subcategory: 'Sistemas de control',
+    count: 14,
+    items: [
+      ['modelo de motor DC con carga variable', 'incluir dinámica eléctrica y mecánica acoplada', ['modelo estático de par', 'solo ecuación eléctrica', 'solo fricción seca'], 'La interacción electro-mecánica define transitorios reales.'],
+      ['linealización de sistema no lineal', 'alrededor de punto de operación', ['en cualquier punto sin referencia', 'promedio temporal simple', 'integración numérica directa'], 'La linealización local depende del equilibrio seleccionado.'],
+      ['validación de modelo', 'comparar simulación con datos experimentales', ['aumentar complejidad hasta converger', 'evitar mediciones', 'ajustar a ojo sin métricas'], 'El ajuste requiere evidencia cuantitativa de error.'],
+      ['modelo en espacio de estados', 'representar sistema MIMO de forma compacta', ['usar solo función escalón', 'tabla de verdad', 'ecuación algebraica única'], 'Estado facilita análisis y diseño moderno.'],
+      ['simulación de vibraciones', 'considerar amortiguamiento y excitación externa', ['asumir amortiguamiento cero siempre', 'ignorar condiciones iniciales', 'usar paso muy grande'], 'Respuesta transitoria depende de amortiguamiento y muestreo.'],
+      ['identificación paramétrica', 'estimar parámetros minimizando error', ['ajustar manual sin criterio', 'usar valores de catálogo', 'ignorar ruido'], 'Métodos de identificación cuantifican incertidumbre paramétrica.'],
+      ['co-simulación mecánica-electrónica', 'sincronizar solver y pasos de integración', ['solvers independientes sin acople', 'mismo paso sin estabilidad', 'anular eventos discretos'], 'La co-simulación exige coordinación temporal consistente.'],
+      ['modelo de fricción de Coulomb+viscosa', 'captura zona de baja velocidad mejor que modelo lineal puro', ['es idéntico al modelo lineal', 'sirve solo en alta velocidad', 'elimina histéresis totalmente'], 'La fricción no lineal domina en inversión de movimiento.'],
+      ['análisis de sensibilidad', 'evalúa impacto de parámetros en desempeño', ['sustituye diseño de control', 'elimina necesidad de medición', 'no depende del modelo'], 'Permite priorizar tolerancias y calibraciones críticas.'],
+      ['simulación en tiempo real (HIL)', 'cumplir restricciones de latencia y determinismo', ['usar PC sin reloj determinista', 'priorizar solo gráficos', 'omitir modelo de planta'], 'En HIL el tiempo de cómputo debe ser menor al paso de control.']
+    ]
+  },
+  {
+    category: 'Implementación de sistemas mecatrónicos',
+    subcategory: 'Tecnologías CAD, CAM y CAE',
+    count: 10,
+    items: [
+      ['diseño paramétrico CAD', 'facilita cambios controlados por relaciones', ['solo edición directa de mallas', 'elimina tolerancias', 'evita historial de operaciones'], 'Parametrización acelera iteraciones de diseño.'],
+      ['análisis FEA de componente', 'definir condiciones de frontera realistas', ['mallar muy fino sin restricciones', 'aplicar cargas arbitrarias', 'usar material genérico'], 'Resultados dependen críticamente de fronteras y cargas.'],
+      ['CAM para mecanizado de cavidad', 'estrategia de desbaste y acabado diferenciada', ['una sola pasada final', 'avance máximo constante', 'sin compensación de herramienta'], 'Rugosidad y tiempo dependen de estrategia de trayectorias.'],
+      ['tolerancias geométricas (GD&T)', 'controlan funcionalidad de ensamble', ['solo mejoran estética', 'reemplazan material', 'eliminan inspección'], 'GD&T comunica requisitos funcionales de fabricación y metrología.'],
+      ['postprocesador CAM', 'adapta trayectorias al control CNC específico', ['convierte CAD a STL', 'calibra husillo', 'mide dureza'], 'Sin postprocesado correcto el código no es ejecutable en máquina.'],
+      ['optimización topológica', 'reduce masa manteniendo rigidez objetivo', ['aumenta masa para seguridad', 'sustituye análisis modal', 'evita manufactura aditiva'], 'Define distribución de material según función objetivo y restricciones.'],
+      ['análisis térmico CAE', 'evalúa expansión y gradientes de temperatura', ['solo color de superficie', 'únicamente flujo másico', 'ignora conducción'], 'Cambios térmicos afectan precisión dimensional y vida útil.'],
+      ['simulación cinemática CAD', 'verifica interferencias y rangos de movimiento', ['calcula solo masa', 'sustituye control PID', 'elimina necesidad de prototipo'], 'Detecta colisiones antes de fabricación.'],
+      ['DFM en etapa CAD', 'reduce costo al considerar procesos de manufactura', ['aumenta complejidad geométrica', 'prohíbe estandarización', 'evita radios internos'], 'Diseñar para manufactura mejora producibilidad.'],
+      ['CAE multifísica', 'acopla fenómenos estructurales, térmicos y fluidos', ['se limita a estática lineal', 'solo usa hojas de cálculo', 'ignora materiales'], 'La interacción de dominios describe mejor sistemas mecatrónicos reales.']
+    ]
+  },
+  {
+    category: 'Implementación de sistemas mecatrónicos',
+    subcategory: 'Sensores y actuadores',
+    count: 21,
+    items: [
+      ['selección de encoder para eje rápido', 'resolver velocidad máxima y resolución efectiva', ['solo número de canales', 'únicamente costo', 'color del cable'], 'La resolución útil depende de frecuencia de conteo y ruido.'],
+      ['LVDT en ambiente industrial', 'excitación AC y demodulación adecuada', ['alimentación DC directa', 'conexión sin blindaje', 'lectura con comparador digital'], 'El LVDT requiere acondicionamiento específico.'],
+      ['actuador neumático de doble efecto', 'dimensionar por fuerza útil y presión mínima', ['solo diámetro de manguera', 'carrera más larga posible', 'válvula de mayor voltaje'], 'La fuerza efectiva depende del área y presión real disponible.'],
+      ['motor paso a paso en lazo abierto', 'evitar pérdida de pasos con perfil de aceleración', ['arranque a frecuencia máxima', 'eliminar rampa', 'reducir corriente a cero'], 'La inercia carga-motor limita aceleración inicial.'],
+      ['sensor Hall para corriente', 'aislamiento y ancho de banda según aplicación', ['medir solo DC con shunt', 'usar NTC en serie', 'alimentarlo con PWM directo'], 'Hall permite sensado aislado AC/DC según diseño.'],
+      ['válvula proporcional hidráulica', 'control de caudal por señal analógica calibrada', ['funciona solo ON/OFF', 'no requiere filtración', 'ignora histéresis'], 'Estas válvulas exigen calibración y aceite limpio.'],
+      ['galgas extensométricas', 'puente Wheatstone para sensibilidad y compensación', ['conexión serie simple', 'medición por amperímetro', 'alimentación variable no regulada'], 'Puente mejora linealidad y rechazo térmico.'],
+      ['servoaccionamiento brushless', 'control vectorial con realimentación de posición', ['conmutación manual', 'inversor monofásico', 'control por relé'], 'BLDC/PMAC de precisión requiere estrategia de control cerrada.'],
+      ['sensor inductivo de proximidad', 'detecta metales por cambio de campo electromagnético', ['mide temperatura', 'detecta color', 'funciona por ultrasonido'], 'Su principio se basa en corrientes parásitas en metales.'],
+      ['actuador piezoeléctrico', 'alta resolución y carrera corta', ['gran carrera sin amplificación', 'respuesta lenta', 'alto par rotacional'], 'Piezo destaca en microposicionamiento rápido.'],
+      ['selección de reductor para servomotor', 'relación y holgura (backlash) compatibles con precisión', ['solo tamaño físico', 'relación máxima siempre', 'material del eje secundario'], 'Backlash impacta exactitud en inversión de movimiento.']
+    ]
+  },
+  {
+    category: 'Instrumentación de sistemas mecatrónicos',
+    subcategory: 'Sensores y actuadores',
+    count: 21,
+    items: [
+      ['trazabilidad metrológica en planta', 'calibración con patrones certificados', ['comparación visual del operador', 'ajuste por promedio', 'reinicio del sensor'], 'La trazabilidad asegura comparabilidad de mediciones.'],
+      ['incertidumbre de medición', 'combinar componentes tipo A y tipo B', ['usar solo repetibilidad', 'tomar valor nominal', 'descartar resolución'], 'La incertidumbre expandida integra fuentes estadísticas y sistemáticas.'],
+      ['adquisición de señal ruidosa', 'filtrado y apantallamiento antes de digitalizar', ['aumentar ganancia sin filtro', 'usar cable no trenzado', 'conectar tierra en estrella múltiple'], 'El ruido debe mitigarse en hardware y topología de cableado.'],
+      ['muestreo de vibración en maquinaria', 'frecuencia de muestreo > 2.5 veces componente de interés', ['igual a frecuencia de interés', 'menor que banda útil', 'muestra aleatoria'], 'Se requiere margen sobre Nyquist para análisis confiable.'],
+      ['instrumentación 4-20 mA', 'alta inmunidad al ruido y detección de falla de lazo', ['máxima velocidad de datos', 'no requiere alimentación', 'solo para laboratorio'], '4-20 mA es robusto para transmisión industrial.'],
+      ['termopar tipo K', 'requiere compensación de unión fría', ['medición directa sin referencia', 'solo amplificador operacional', 'excitación por puente'], 'El termopar mide diferencia de temperatura.'],
+      ['sensor RTD PT100', 'linealidad superior frente a termopar en rango moderado', ['respuesta digital nativa', 'no requiere corriente de excitación', 'alta deriva por diseño'], 'PT100 ofrece precisión con acondicionamiento correcto.'],
+      ['DAQ multicanal', 'sincronización temporal entre canales críticos', ['lectura secuencial sin timestamp', 'mismo cable para todo', 'eliminar reloj'], 'El desfase entre canales altera cálculos dinámicos.'],
+      ['diagnóstico de instrumento saturado', 'verificar rango, offset y condición de señal', ['reducir resolución ADC', 'cambiar color de gráfica', 'aumentar baudrate'], 'La saturación invalida medición y control.'],
+      ['calibración in situ de transmisor de presión', 'aplicar puntos ascendentes y descendentes para histéresis', ['un solo punto nominal', 'solo cero', 'prueba sin patrón'], 'La histéresis se detecta con barridos bidireccionales.'],
+      ['instrumentación virtual', 'integrar adquisición, procesamiento y visualización en software', ['reemplaza sensores físicos', 'elimina calibración', 'evita protocolos'], 'Permite flexibilidad de pruebas y trazabilidad digital.']
+    ]
+  },
+  {
+    category: 'Programación de sistemas electrónicos',
+    subcategory: 'Dispositivos electrónicos',
+    count: 24,
+    items: [
+      ['firmware en tiempo real para control', 'tareas periódicas con temporizador determinista', ['while infinito con delays variables', 'prioridad aleatoria', 'polling sin límite'], 'El control requiere jitter bajo y periodos constantes.'],
+      ['interrupciones en microcontrolador', 'rutinas ISR cortas y no bloqueantes', ['usar printf largo en ISR', 'esperar por UART', 'hacer cálculo pesado completo'], 'ISR extensas degradan latencia global.'],
+      ['máquina de estados para secuencia industrial', 'transiciones explícitas por eventos', ['condiciones implícitas dispersas', 'saltos goto múltiples', 'variables globales sin control'], 'FSM mejora trazabilidad y depuración.'],
+      ['comunicación SPI con ADC externo', 'sincronizar reloj y fase CPOL/CPHA', ['usar baudrate serial UART', 'ignorar chip select', 'leer sin reloj'], 'Parámetros de fase/polaridad determinan validez de datos.'],
+      ['comunicación I2C robusta', 'manejar ACK/NACK y recuperación de bus', ['suponer ACK siempre', 'sin resistencias pull-up', 'una sola dirección fija'], 'I2C requiere manejo de fallos de arbitraje y bloqueo.'],
+      ['optimización de memoria embebida', 'usar buffers estáticos y perfilado de RAM', ['reservas dinámicas continuas', 'copias innecesarias', 'string sin límites'], 'Memoria limitada exige diseño predecible.'],
+      ['control de versión para firmware', 'ramas y revisión de cambios trazable', ['sobrescribir archivo final', 'nombres v1final2', 'sin historial'], 'Versionado reduce errores de integración.'],
+      ['RTOS en sistema mecatrónico', 'prioridades y mutex para recursos compartidos', ['todas tareas misma prioridad', 'sin exclusión mutua', 'polling bloqueante'], 'Sincronización evita condiciones de carrera.'],
+      ['DMA para adquisición rápida', 'descargar CPU en transferencia de datos', ['copiar byte por byte en bucle', 'usar interrupción por bit', 'desactivar reloj periférico'], 'DMA mejora rendimiento en muestreo continuo.'],
+      ['seguridad en bootloader', 'verificación de integridad/firmado de firmware', ['actualizar sin validación', 'usar contraseña fija en texto', 'ignorar rollback'], 'Evita carga de firmware corrupto o malicioso.'],
+      ['depuración JTAG/SWD', 'breakpoints y watchpoints en variables críticas', ['depurar con mensajes aleatorios', 'desactivar optimización siempre', 'reiniciar sin traza'], 'Herramientas de depuración reducen tiempo de diagnóstico.'],
+      ['programación defensiva en C embebido', 'validar límites y estados inválidos', ['asumir entradas perfectas', 'omitir manejo de errores', 'usar casts inseguros'], 'Entradas no válidas son comunes en entorno industrial.']
+    ]
+  },
+  {
+    category: 'Integración de tecnologías para sistemas mecatrónicos',
+    subcategory: 'Planeación y evaluación de proyectos',
+    count: 28,
+    items: [
+      ['ruta crítica en proyecto mecatrónico', 'actividades con holgura cero', ['tareas más costosas', 'actividades con más personal', 'etapas de compras'], 'La ruta crítica determina duración mínima del proyecto.'],
+      ['gestión de riesgos técnicos', 'matriz probabilidad-impacto con plan de mitigación', ['solo lista de riesgos', 'eliminar riesgos menores sin análisis', 'transferir todos al cliente'], 'Gestionar riesgo implica priorizar y actuar preventivamente.'],
+      ['WBS en ingeniería', 'descomposición jerárquica del alcance', ['cronograma diario', 'lista de compras', 'organigrama de empresa'], 'La EDT/WBS estructura entregables y paquetes de trabajo.'],
+      ['valor ganado (EVM)', 'comparar PV, EV y AC para desempeño', ['solo costo real', 'solo avance físico', 'solo presupuesto aprobado'], 'EVM integra costo y avance para control del proyecto.'],
+      ['análisis de factibilidad técnica', 'validar disponibilidad tecnológica y capacidades', ['solo retorno financiero', 'solo opinión comercial', 'solo benchmark de marketing'], 'Factibilidad técnica evita compromisos inviables.'],
+      ['gestión de cambios de alcance', 'control formal con impacto en costo-tiempo', ['aceptar cambios sin registro', 'bloquear todos los cambios', 'modificar planos al final'], 'El control de cambios mantiene trazabilidad contractual.'],
+      ['documentación de requisitos', 'especificaciones verificables y medibles', ['requisitos ambiguos', 'enunciados sin criterio de aceptación', 'copia de catálogos'], 'Requisitos medibles facilitan validación y pruebas.'],
+      ['FMEA de sistema mecatrónico', 'priorizar por severidad, ocurrencia y detección', ['ordenar por costo de componente', 'usar solo severidad', 'omitir acciones correctivas'], 'FMEA identifica modos de falla y acciones preventivas.'],
+      ['puesta en marcha (commissioning)', 'plan de pruebas SAT/FAT con criterios', ['prueba única final', 'arranque sin checklist', 'validación verbal'], 'SAT/FAT aseguran cumplimiento técnico antes de entrega.'],
+      ['ROI de automatización', 'considerar CAPEX, OPEX y productividad', ['solo costo inicial', 'solo consumo eléctrico', 'solo depreciación contable'], 'El retorno depende de ahorros y mejoras operativas.'],
+      ['gestión de stakeholders', 'mapa de interesados y estrategia de comunicación', ['enviar correos masivos', 'informar solo al patrocinador', 'evitar reportes'], 'Alinear interesados reduce retrabajos y bloqueos.'],
+      ['madurez tecnológica (TRL)', 'evaluar nivel de preparación de la solución', ['medir solo calidad del proveedor', 'estimar por intuición', 'ignorar pruebas piloto'], 'TRL ayuda a estimar riesgo de adopción tecnológica.'],
+      ['procura de componentes críticos', 'estrategia de abastecimiento y obsolescencia', ['comprar solo por menor precio', 'proveedor único sin respaldo', 'sin inventario de seguridad'], 'Electrónica y actuadores sufren lead times largos.'],
+      ['KPIs de proyecto de automatización', 'OTD, cumplimiento técnico y desviación de costo', ['solo horas-hombre', 'solo satisfacción interna', 'solo consumo de café'], 'KPIs deben reflejar resultados de negocio y técnicos.']
+    ]
+  },
+  {
+    category: 'Integración de tecnologías para sistemas mecatrónicos',
+    subcategory: 'Redes industriales',
+    count: 17,
+    items: [
+      ['selección de protocolo industrial', 'latencia, determinismo y topología requerida', ['color del cable', 'marca del PLC', 'idioma del software'], 'El protocolo se elige por requisitos de desempeño y compatibilidad.'],
+      ['PROFINET IRT', 'comunicación en tiempo real isócrono para motion', ['mensajería no determinista', 'solo diagnóstico web', 'protocolo serie RS-232'], 'IRT está orientado a control de movimiento sincronizado.'],
+      ['EtherCAT', 'procesamiento on-the-fly con baja latencia', ['token passing clásico', 'maestro-maestro sin sincronía', 'solo capa aplicación'], 'EtherCAT optimiza ciclo en redes de servodrives.'],
+      ['Modbus RTU', 'protocolo maestro-esclavo sobre RS-485', ['topología anillo óptico', 'sin direccionamiento de nodo', 'transmisión TCP nativa'], 'RTU usa serial diferencial y CRC.'],
+      ['segmentación de red OT', 'aislar celdas y controlar tráfico entre zonas', ['red plana única', 'acceso abierto desde internet', 'broadcast sin filtros'], 'Segmentar mejora ciberseguridad y disponibilidad.'],
+      ['sincronización temporal IEEE 1588', 'alinear reloj para eventos distribuidos', ['usar reloj local sin ajuste', 'sin timestamp de paquetes', 'aumentar solo ancho de banda'], 'PTP habilita coordinación temporal precisa.'],
+      ['redundancia en red industrial', 'anillos MRP/PRP según criticidad', ['un solo switch sin respaldo', 'redundancia solo eléctrica', 'backup manual semanal'], 'La redundancia reduce tiempo de indisponibilidad.'],
+      ['diagnóstico de red OT', 'monitorear jitter, pérdida y utilización', ['solo ping es suficiente', 'revisar temperatura ambiente', 'reiniciar PLC siempre'], 'Indicadores de red explican fallos intermitentes de control.'],
+      ['seguridad en protocolos industriales', 'listas de control, VLAN y autenticación', ['contraseña por defecto', 'sin firewall interno', 'acceso remoto abierto'], 'OT requiere hardening específico de comunicaciones.']
+    ]
+  },
+  {
+    category: 'Integración de tecnologías para sistemas mecatrónicos',
+    subcategory: 'Automatización y control industrial',
+    count: 17,
+    items: [
+      ['arquitectura de celda automatizada', 'separar niveles campo-control-supervisión', ['un único controlador para todo', 'SCADA como PLC', 'sin bus de campo'], 'La jerarquía mejora escalabilidad y mantenimiento.'],
+      ['interlocks de seguridad', 'lógica cableada o safety PLC certificada', ['interlock solo en HMI', 'deshabilitar en arranque', 'reset automático sin validación'], 'Funciones de seguridad deben cumplir normas funcionales.'],
+      ['control secuencial en PLC', 'SFC/GRAFCET para etapas y transiciones', ['solo lazo PID', 'tabla Excel en operador', 'script sin estados'], 'SFC facilita diagnóstico y operación de secuencias.'],
+      ['SCADA en planta', 'supervisión, alarmas y trazabilidad histórica', ['control de alta velocidad', 'reemplazo de sensores', 'cálculo FEM'], 'SCADA complementa al PLC para capa de supervisión.'],
+      ['OEE en automatización', 'disponibilidad x rendimiento x calidad', ['solo tiempo de ciclo', 'solo piezas buenas', 'solo consumo'], 'OEE evalúa efectividad global del equipo.'],
+      ['lazo de control de temperatura industrial', 'estrategia PID con anti-windup y filtrado', ['control ON/OFF en proceso lento crítico', 'sin realimentación', 'solo feedforward'], 'Procesos térmicos requieren robustez ante retardos.'],
+      ['integración robot-PLC', 'handshake determinista y gestión de fallas', ['arranque por señal única', 'sin estados de error', 'comunicación manual'], 'El handshake evita colisiones y secuencias inseguras.'],
+      ['arranque de motor en línea de producción', 'considerar corriente de arranque y protección', ['activar sin protección térmica', 'eliminar contactor', 'solo fusible ultrarrápido'], 'Protección adecuada preserva equipo y continuidad operativa.'],
+      ['mantenimiento predictivo en automatización', 'usar datos de condición para anticipar fallas', ['mantenimiento solo correctivo', 'cambiar piezas por calendario fijo', 'sin registro histórico'], 'La analítica de condición reduce paros no programados.']
+    ]
+  }
 ];
+
+const templates = [
+  ({ concept, category, subcategory }) => `En el contexto de ${category.toLowerCase()} (${subcategory.toLowerCase()}), ¿qué enfoque es más adecuado para ${concept}?`,
+  ({ concept }) => `En una evaluación CENEVAL de nivel difícil, ¿cuál afirmación técnica describe mejor la decisión de ingeniería para ${concept}?`,
+  ({ concept }) => `Al validar un diseño mecatrónico, ¿qué criterio profesional aplica específicamente para ${concept}?`
+];
+
+function buildQuestionsFromTopic(topic) {
+  const generated = [];
+  let idx = 0;
+
+  while (generated.length < topic.count) {
+    const [concept, answer, distractors, explanation] = topic.items[idx % topic.items.length];
+    const template = templates[idx % templates.length];
+
+    generated.push({
+      category: `${topic.category} · ${topic.subcategory}`,
+      question: template({ concept, category: topic.category, subcategory: topic.subcategory }),
+      options: [answer, ...distractors],
+      answer,
+      explanation: `${explanation} [Área: ${topic.category}]`
+    });
+
+    idx += 1;
+  }
+
+  return generated;
+}
+
+export const questions = examBlueprint.flatMap(buildQuestionsFromTopic);

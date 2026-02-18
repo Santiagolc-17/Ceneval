@@ -67,10 +67,10 @@ export default function App() {
     <main className="app">
       {screen === 'start' && (
         <section className="card">
-          <h1>🎮 Preguntados Chill</h1>
+          <h1>🧠 CENEVAL Mecatrónica · Nivel Difícil</h1>
           <p>
-            Juego visual de trivia con <strong>100 preguntas</strong>. Elige la respuesta correcta y
-            recibe retro si te equivocas.
+            Simulador visual con <strong>200 preguntas difíciles</strong> de Mecatrónica.
+            Elige la opción correcta y revisa la retroalimentación técnica.
           </p>
           <label htmlFor="player-name">Tu nombre (opcional)</label>
           <input
