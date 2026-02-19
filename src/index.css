@@ -248,3 +248,28 @@ select {
   padding: 0.1rem 0.35rem;
   border-radius: 6px;
 }
+
+.formula-panel {
+  margin: 0.8rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 12px;
+  padding: 0.7rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.formula-panel summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.formula-box {
+  margin: 0.6rem 0;
+  border: 1px dashed rgba(155, 229, 255, 0.45);
+  border-radius: 10px;
+  padding: 0.5rem 0.7rem;
+}
+
+.formula-box ul {
+  margin: 0.35rem 0 0;
+  padding-left: 1rem;
+}

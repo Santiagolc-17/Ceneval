@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { questions } from './allQuestions.js';
 import { studySections } from './studyContent.js';
 
-const HISTORY_KEY = 'ceneval_history_v3';
+const HISTORY_KEY = 'ceneval_history_v4';
 
 function shuffle(array) {
   const copy = [...array];
@@ -11,6 +11,13 @@ function shuffle(array) {
     [copy[i], copy[j]] = [copy[j], copy[i]];
   }
   return copy;
+}
+
+function normalize(text) {
+  return (text || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
 }
 
 function getResultMessage(percent) {
@@ -22,13 +29,13 @@ function getResultMessage(percent) {
 
 const blockOptions = [
   { id: 'all', label: 'Todo mezclado', match: () => true },
-  { id: 'cinematica', label: 'Solo Cinemática y dinámica', match: (q) => q.category.toLowerCase().includes('cinemática') },
-  { id: 'cnc', label: 'Solo Materiales y CNC', match: (q) => q.category.toLowerCase().includes('cnc') || q.category.toLowerCase().includes('materiales') },
-  { id: 'energia', label: 'Solo Energía y trabajo', match: (q) => q.category.toLowerCase().includes('energía') },
-  { id: 'robots', label: 'Solo robótica / control', match: (q) => q.category.toLowerCase().includes('robot') || q.category.toLowerCase().includes('control') },
-  { id: 'integradores', label: 'Solo problemas integradores', match: (q) => q.category.toLowerCase().includes('integradores') },
-  { id: 'basico', label: 'Solo banco básico chill', match: (q) => q.category.toLowerCase().includes('banco básico chill') },
-  { id: 'verificadas', label: 'Solo preguntas verificadas', match: (q) => q.category.toLowerCase().includes('preguntas verificadas') || q.category.toLowerCase().includes('epe') }
+  { id: 'cinematica', label: 'Solo Cinemática y dinámica', match: (q) => normalize(q.category).includes('cinematica') || normalize(q.category).includes('movimiento') },
+  { id: 'cnc', label: 'Solo Materiales y CNC', match: (q) => normalize(q.category).includes('cnc') || normalize(q.category).includes('materiales') },
+  { id: 'energia', label: 'Solo Energía y trabajo', match: (q) => normalize(q.category).includes('energia') || normalize(q.category).includes('potencia') },
+  { id: 'robots', label: 'Solo robótica / control', match: (q) => normalize(q.category).includes('robot') || normalize(q.category).includes('control') || normalize(q.category).includes('laplace') || normalize(q.category).includes('z') },
+  { id: 'bits', label: 'Solo electrónica / bits', match: (q) => normalize(q.category).includes('bit') || normalize(q.category).includes('mosfet') || normalize(q.category).includes('flip-flop') || normalize(q.category).includes('digital') },
+  { id: 'economica', label: 'Solo proyectos / ingeniería económica', match: (q) => normalize(q.category).includes('economica') || normalize(q.category).includes('pert') || normalize(q.category).includes('proyecto') || normalize(q.category).includes('tmar') },
+  { id: 'verificadas', label: 'Solo preguntas verificadas', match: (q) => normalize(q.category).includes('verificada') || normalize(q.category).includes('epe') }
 ];
 
 function calculateCategoryStats(quizQuestions, answers) {
@@ -39,10 +46,7 @@ function calculateCategoryStats(quizQuestions, answers) {
     stats[q.category].total += 1;
     if (item.correct) stats[q.category].correct += 1;
   });
-
-  return Object.fromEntries(
-    Object.entries(stats).map(([k, v]) => [k, { ...v, percent: Math.round((v.correct / v.total) * 100) }])
-  );
+  return Object.fromEntries(Object.entries(stats).map(([k, v]) => [k, { ...v, percent: Math.round((v.correct / v.total) * 100) }]));
 }
 
 function aggregatePerformance(history) {
@@ -54,7 +58,6 @@ function aggregatePerformance(history) {
       agg[category].correct += value.correct;
     });
   });
-
   return Object.entries(agg)
     .map(([category, v]) => ({ category, percent: Math.round((v.correct / v.total) * 100), total: v.total }))
     .sort((a, b) => a.percent - b.percent);
@@ -65,6 +68,11 @@ function buildAdaptivePool(filteredQuestions, weakCategories, adaptiveEnabled) {
   const weakSet = new Set(weakCategories);
   const bonus = filteredQuestions.filter((q) => weakSet.has(q.category));
   return [...filteredQuestions, ...bonus, ...bonus];
+}
+
+function getRelevantStudyCards(category) {
+  const cat = normalize(category);
+  return studySections.filter((s) => s.keywords.some((k) => cat.includes(normalize(k))));
 }
 
 export default function App() {
@@ -96,6 +104,7 @@ export default function App() {
   const current = quizQuestions[index];
   const currentAnswer = answers[index] || { marked: false, completed: false, correct: false, attempts: 0, showHint: false };
   const shuffledOptions = useMemo(() => (current ? shuffle(current.options) : []), [current]);
+  const relatedCards = useMemo(() => (current ? getRelevantStudyCards(current.category) : []), [current]);
 
   const ranking = aggregatePerformance(history);
   const weak5 = ranking.slice(0, 5);
@@ -205,19 +214,12 @@ export default function App() {
         <section className="card">
           <h1>🧠 CENEVAL Mecatrónica · Smart Trainer</h1>
           <p>
-            Banco de <strong>{questions.length} preguntas</strong> con fuentes, tips por reactivo,
-            modo juego/estudio y enfoque adaptativo.
+            Banco de <strong>{questions.length} preguntas</strong> con fuentes, explicación profunda,
+            tips y formulario de apoyo durante el examen.
           </p>
 
           <label htmlFor="player-name">Tu nombre (opcional)</label>
-          <input
-            id="player-name"
-            type="text"
-            value={playerNameInput}
-            onChange={(event) => setPlayerNameInput(event.target.value)}
-            placeholder="Ej. Alex"
-            maxLength={20}
-          />
+          <input id="player-name" type="text" value={playerNameInput} onChange={(event) => setPlayerNameInput(event.target.value)} placeholder="Ej. Alex" maxLength={20} />
 
           <label>Modo</label>
           <div className="mode-wrap">
@@ -227,33 +229,27 @@ export default function App() {
 
           <label htmlFor="block-select">Bloque de examen</label>
           <select id="block-select" value={selectedBlock} onChange={(e) => setSelectedBlock(e.target.value)}>
-            {blockOptions.map((block) => (
-              <option key={block.id} value={block.id}>{block.label}</option>
-            ))}
+            {blockOptions.map((block) => <option key={block.id} value={block.id}>{block.label}</option>)}
           </select>
 
           <label className="check-wrap">
             <input type="checkbox" checked={adaptiveEnabled} onChange={(e) => setAdaptiveEnabled(e.target.checked)} />
-            Activar banco adaptativo (más preguntas de tus áreas débiles)
+            Activar banco adaptativo (prioriza tus áreas débiles)
           </label>
 
           <div className="question-actions">
             <button onClick={startGame}>Empezar examen</button>
-            <button onClick={() => setScreen('study')}>Abrir biblioteca de estudio</button>
+            <button onClick={() => setScreen('study')}>Abrir teoría / formulario</button>
           </div>
 
           <div className="stats-grid">
             <div>
               <h3>🔥 Áreas fuertes</h3>
-              <ul>
-                {strong5.length === 0 ? <li>Sin historial aún.</li> : strong5.map((s) => <li key={s.category}>{s.category} — {s.percent}%</li>)}
-              </ul>
+              <ul>{strong5.length === 0 ? <li>Sin historial aún.</li> : strong5.map((s) => <li key={s.category}>{s.category} — {s.percent}%</li>)}</ul>
             </div>
             <div>
               <h3>🧩 Áreas a reforzar</h3>
-              <ul>
-                {weak5.length === 0 ? <li>Sin historial aún.</li> : weak5.map((s) => <li key={s.category}>{s.category} — {s.percent}%</li>)}
-              </ul>
+              <ul>{weak5.length === 0 ? <li>Sin historial aún.</li> : weak5.map((s) => <li key={s.category}>{s.category} — {s.percent}%</li>)}</ul>
             </div>
           </div>
         </section>
@@ -261,28 +257,41 @@ export default function App() {
 
       {screen === 'study' && (
         <section className="card">
-          <h2>📚 Biblioteca de estudio (leyes y ecuaciones clave)</h2>
-          <p>Resumen de ecuaciones importantes, tips de resolución y repaso rápido por tema.</p>
+          <h2>📚 Formulario y teoría guiada</h2>
+          <p>Cada sección incluye: fórmula, significado de letras, 3 preguntas teóricas y 3 ejercicios resueltos.</p>
           <div className="study-grid">
             {studySections.map((section) => (
-              <article key={section.title} className="study-card">
+              <article key={section.id} className="study-card">
                 <h3>{section.title}</h3>
                 <p>{section.summary}</p>
-                <strong>Ecuaciones clave:</strong>
+
+                <strong>Formulario:</strong>
+                {section.formulaSheet.map((f) => (
+                  <div key={f.formula} className="formula-box">
+                    <code>{f.formula}</code>
+                    <ul>
+                      {Object.entries(f.variables).map(([k, v]) => <li key={`${f.formula}-${k}`}><strong>{k}</strong>: {v}</li>)}
+                    </ul>
+                  </div>
+                ))}
+
+                <strong>3 preguntas teóricas:</strong>
                 <ul>
-                  {section.keyEquations.map((eq) => <li key={eq}><code>{eq}</code></li>)}
+                  {section.theoryQuestions.map((t) => <li key={t.question}><strong>{t.question}</strong><br />{t.answer}</li>)}
                 </ul>
+
+                <strong>3 ejercicios:</strong>
+                <ul>
+                  {section.exercises.map((e) => <li key={e.problem}><strong>{e.problem}</strong><br />{e.solution}</li>)}
+                </ul>
+
                 <strong>Tips:</strong>
-                <ul>
-                  {section.tips.map((tip) => <li key={tip}>{tip}</li>)}
-                </ul>
-                {section.imageUrl && (
-                  <a href={section.imageUrl} target="_blank" rel="noreferrer">Ver imagen de apoyo</a>
-                )}
+                <ul>{section.tips.map((tip) => <li key={tip}>{tip}</li>)}</ul>
+                {section.imageUrl && <a href={section.imageUrl} target="_blank" rel="noreferrer">Ver imagen de apoyo</a>}
               </article>
             ))}
           </div>
-          <button onClick={() => setScreen('start')}>Volver al inicio</button>
+          <button onClick={() => setScreen('start')}>Volver al menú principal</button>
         </section>
       )}
 
@@ -302,9 +311,29 @@ export default function App() {
           <div className="question-actions">
             <button className={currentAnswer.marked ? 'mark-btn active' : 'mark-btn'} onClick={toggleMark}>🚩 Marcar duda</button>
             {mode === 'estudio' && <button className="mark-btn" onClick={toggleHint}>💡 {currentAnswer.showHint ? 'Ocultar pista' : 'Ver pista'}</button>}
+            <button className="mark-btn" onClick={() => setScreen('start')}>🏠 Menú principal</button>
           </div>
 
           {mode === 'estudio' && currentAnswer.showHint && <div className="hint">Pista específica: {current.hint}</div>}
+
+          {relatedCards.length > 0 && (
+            <details className="formula-panel">
+              <summary>📐 Ver formulario para este reactivo</summary>
+              {relatedCards.map((section) => (
+                <div key={`rel-${section.id}`}>
+                  <h4>{section.title}</h4>
+                  {section.formulaSheet.slice(0, 3).map((f) => (
+                    <div key={`relf-${section.id}-${f.formula}`} className="formula-box">
+                      <code>{f.formula}</code>
+                      <ul>
+                        {Object.entries(f.variables).map(([k, v]) => <li key={`rv-${section.id}-${k}`}><strong>{k}</strong>: {v}</li>)}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </details>
+          )}
 
           <h2>{current.question}</h2>
           <div className="options">
@@ -336,10 +365,16 @@ export default function App() {
                   {mode === 'estudio' && <p>Intenta de nuevo hasta acertar 👇</p>}
                 </>
               )}
+
+              <strong>¿Por qué sí / por qué no?</strong>
+              <ul>
+                {current.options.map((opt) => (
+                  <li key={`why-${opt}`}><strong>{opt === current.answer ? '✅' : '❌'} {opt}:</strong> {current.optionExplanations?.[opt]}</li>
+                ))}
+              </ul>
+
               {current.sourceUrl && (
-                <p>
-                  <strong>Fuente:</strong> <a href={current.sourceUrl} target="_blank" rel="noreferrer">{current.source || current.sourceUrl}</a>
-                </p>
+                <p><strong>Fuente:</strong> <a href={current.sourceUrl} target="_blank" rel="noreferrer">{current.source || current.sourceUrl}</a></p>
               )}
             </div>
           )}
@@ -355,11 +390,7 @@ export default function App() {
               if (a.marked) cls.push('marked');
               if (a.correct) cls.push('ok');
               else if (a.completed && !a.correct) cls.push('bad');
-              return (
-                <button key={`dot-${i}`} className={cls.join(' ')} onClick={() => setIndex(i)}>
-                  {i + 1}
-                </button>
-              );
+              return <button key={`dot-${i}`} className={cls.join(' ')} onClick={() => setIndex(i)}>{i + 1}</button>;
             })}
           </div>
         </section>
@@ -370,7 +401,7 @@ export default function App() {
           <h2>🏁 Fin de la sesión ({mode})</h2>
           <p>{player}, obtuviste {score}/{quizQuestions.length} ({percent}%). {getResultMessage(percent)}</p>
           <button onClick={startGame}>Reintentar mismo bloque</button>
-          <button onClick={() => setScreen('start')}>Cambiar bloque/modo</button>
+          <button onClick={() => setScreen('start')}>Volver al menú principal</button>
 
           <h3>Últimas sesiones</h3>
           <ul>

@@ -104,7 +104,7 @@ function expandRequestedSections() {
       const seed = section.seeds[i % section.seeds.length];
       built.push({
         category: `Banco adicional · ${section.category}`,
-        question: seed[0],
+        question: `${seed[0]} ${i >= section.seeds.length ? `(variante ${Math.floor(i / section.seeds.length) + 1})` : ''}`.trim(),
         options: [seed[1], ...seed[2]],
         answer: seed[1],
         explanation: `${seed[3]} [Retro chill: repasa fórmula y unidades.]`

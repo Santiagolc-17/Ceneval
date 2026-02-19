@@ -1,36 +1,39 @@
 # CENEVAL Mecatrónica (React + Vite)
 
-Simulador tipo CENEVAL para Mecatrónica con banco ampliado, preguntas verificadas, modo juego/estudio y biblioteca de repaso.
+Simulador tipo CENEVAL para Mecatrónica orientado a preparación real (EPE + EGEL).
 
 ## ¿Qué incluye ahora?
 
-- **660 preguntas en total**:
-  - 200 preguntas de nivel difícil (banco principal).
-  - 350 preguntas adicionales (incluye +30 por sección solicitada en bloques clave).
-  - 100 preguntas EPE verificadas/similares con bibliografía técnica referencial.
-  - 10 preguntas verificadas de internet con fuente explícita.
-- Orden aleatorio de preguntas y opciones en cada sesión.
-- Modo **Juego** y modo **Estudio** con comportamientos distintos.
-- Navegación por reactivos:
-  - botón **Marcar duda**,
-  - panel de estado (respondida/no respondida/marcada),
-  - posibilidad de regresar a cualquier reactivo.
-- Examen por bloques (solo Cinemática, CNC, Energía, Robótica/Control, etc.).
-- Historial local con `localStorage`:
-  - puntaje, fecha, modo, tiempo y desempeño por categoría.
-- Dashboard de desempeño:
-  - top 5 áreas fuertes y 5 áreas débiles.
-- Banco adaptativo:
-  - mayor probabilidad de preguntas de categorías donde históricamente fallas.
-- Biblioteca de estudio:
-  - leyes de Kirchhoff,
-  - dinámica,
-  - cinemática,
-  - robótica,
-  - control,
-  - esfuerzos/materiales,
-  - manufactura CNC,
-  con ecuaciones y tips de resolución.
+- **Banco unificado y depurado** (preguntas base + adicionales + verificadas + EPE).
+- Eliminación de reactivos repetidos por normalización de texto/categoría.
+- Enriquecimiento automático por reactivo:
+  - `hint` (pista),
+  - `deepExplanation` (explicación extendida),
+  - `source` y `sourceUrl` (fuente),
+  - `optionExplanations` (por qué sí / por qué no cada opción).
+- Modo **Juego** (intento único) y **Estudio** (pista + reintento hasta acertar).
+- Navegación por reactivos con:
+  - marcar duda,
+  - panel de estado,
+  - salto directo a cualquier reactivo,
+  - botón para volver al menú principal.
+- Examen por bloques (cinemática, CNC/materiales, energía, robótica/control, bits/electrónica, económica/proyectos, verificadas).
+- Historial local (`localStorage`) con desempeño por categoría.
+- Banco adaptativo (prioriza áreas débiles).
+- Biblioteca de estudio integrada con formulario:
+  - significado de cada letra en las fórmulas,
+  - 3 preguntas teóricas por sección,
+  - 3 ejercicios resueltos por sección,
+  - tips de resolución.
+
+## Secciones de estudio incluidas
+
+- Cinemática
+- Dinámica
+- Esfuerzos y materiales
+- Electrónica digital (bits, MOSFET, flip-flops, ADC)
+- Control clásico/moderno + Laplace/Z
+- PERT/decisión/ingeniería económica
 
 ## Requisitos
 
