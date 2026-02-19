@@ -230,3 +230,21 @@ select {
 .nav-dot.marked {
   box-shadow: 0 0 0 2px rgba(255, 189, 46, 0.4) inset;
 }
+
+.study-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.study-card {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  padding: 0.9rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.study-card code {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.1rem 0.35rem;
+  border-radius: 6px;
+}

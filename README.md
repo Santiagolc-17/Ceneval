@@ -1,27 +1,36 @@
 # CENEVAL Mecatrónica (React + Vite)
 
-Simulador tipo CENEVAL para Mecatrónica con banco ampliado, modo juego/estudio y preguntas verificadas con fuentes.
+Simulador tipo CENEVAL para Mecatrónica con banco ampliado, preguntas verificadas, modo juego/estudio y biblioteca de repaso.
 
 ## ¿Qué incluye ahora?
 
-- **410 preguntas en total**:
+- **660 preguntas en total**:
   - 200 preguntas de nivel difícil (banco principal).
-  - 100 preguntas adicionales basadas en tus bloques solicitados.
-  - 100 preguntas básicas/chill con retro de repaso.
-  - 10 preguntas verificadas con referencias públicas (internet) y explicación extendida.
+  - 350 preguntas adicionales (incluye +30 por sección solicitada en bloques clave).
+  - 100 preguntas EPE verificadas/similares con bibliografía técnica referencial.
+  - 10 preguntas verificadas de internet con fuente explícita.
 - Orden aleatorio de preguntas y opciones en cada sesión.
 - Modo **Juego** y modo **Estudio** con comportamientos distintos.
 - Navegación por reactivos:
   - botón **Marcar duda**,
   - panel de estado (respondida/no respondida/marcada),
   - posibilidad de regresar a cualquier reactivo.
-- Examen por bloques (solo Cinemática, solo CNC, solo Energía, etc.).
+- Examen por bloques (solo Cinemática, CNC, Energía, Robótica/Control, etc.).
 - Historial local con `localStorage`:
-  - puntaje, fecha, modo, tiempo y porcentaje.
+  - puntaje, fecha, modo, tiempo y desempeño por categoría.
 - Dashboard de desempeño:
   - top 5 áreas fuertes y 5 áreas débiles.
 - Banco adaptativo:
   - mayor probabilidad de preguntas de categorías donde históricamente fallas.
+- Biblioteca de estudio:
+  - leyes de Kirchhoff,
+  - dinámica,
+  - cinemática,
+  - robótica,
+  - control,
+  - esfuerzos/materiales,
+  - manufactura CNC,
+  con ecuaciones y tips de resolución.
 
 ## Requisitos
 

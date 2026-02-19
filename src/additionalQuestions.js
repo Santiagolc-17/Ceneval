@@ -1,7 +1,7 @@
 const requestedBlueprint = [
   {
     category: 'Materiales y manufactura CNC',
-    count: 15,
+    count: 45,
     seeds: [
       ['¿Qué significa la designación Al6061?', 'Aleación de aluminio serie 6xxx con Mg-Si', ['Acero al carbono', 'Latón de fundición', 'Aluminio puro 100%'], 'La serie 6xxx usa Mg y Si como aleantes principales.'],
       ['Diferencia entre acero al carbono y acero aleado', 'El aleado incluye elementos para modificar propiedades', ['No hay diferencia', 'El carbono siempre es inoxidable', 'El aleado no contiene hierro'], 'Cr, Ni, Mo y otros alteran resistencia y templabilidad.'],
@@ -22,7 +22,7 @@ const requestedBlueprint = [
   },
   {
     category: 'Cinemática y dinámica',
-    count: 25,
+    count: 55,
     seeds: [
       ['Define vector posición', 'Ubica un punto respecto a un sistema de referencia', ['Es una magnitud escalar', 'Es siempre constante', 'Solo existe en 2D'], 'r⃗ describe localización espacial.'],
       ['Desplazamiento de ri=(2,3,0) a rf=(5,7,0)', '(3,4,0)', ['(7,10,0)', '(2,3,0)', '(-3,-4,0)'], 'Δr=rf-ri.'],
@@ -43,7 +43,7 @@ const requestedBlueprint = [
   },
   {
     category: 'Energía y trabajo',
-    count: 15,
+    count: 45,
     seeds: [
       ['Diferencia entre trabajo y energía', 'Trabajo es transferencia; energía es capacidad', ['Son lo mismo', 'Trabajo solo es potencia', 'Energía solo es eléctrica'], 'W describe proceso, E es estado/capacidad.'],
       ['Energía cinética (m=2, v=3)', '9 J', ['6 J', '3 J', '18 J'], 'K=1/2mv².'],
@@ -61,7 +61,7 @@ const requestedBlueprint = [
   },
   {
     category: 'Automatización y programación',
-    count: 10,
+    count: 40,
     seeds: [
       ['¿Qué es G-code?', 'Lenguaje de instrucciones para CNC', ['Lenguaje de simulación FEM', 'Protocolo de red industrial', 'Formato de imagen CAD'], 'Controla trayectorias y funciones de máquina.'],
       ['CAD vs CAM', 'CAD diseña; CAM manufactura', ['CAD fabrica piezas', 'CAM reemplaza PLC', 'Son sinónimos'], 'Forman parte de flujo digital.'],
@@ -77,7 +77,7 @@ const requestedBlueprint = [
   },
   {
     category: 'Problemas integradores con datos reales',
-    count: 35,
+    count: 65,
     seeds: [
       ['Brazo 2 m con ω=0.5 y vr=0.2', 'vtotal≈1.02 m/s', ['0.7', '1.5', '2.0'], 'vt=ωr=1; v=√(vt²+vr²).'],
       ['Motor en brazo 1.5 m con α=2', 'at=3 m/s²', ['1.5', '0.75', '6'], 'at=αr.'],

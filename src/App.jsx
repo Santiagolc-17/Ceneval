@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { questions } from './allQuestions.js';
+import { studySections } from './studyContent.js';
 
-const HISTORY_KEY = 'ceneval_history_v2';
+const HISTORY_KEY = 'ceneval_history_v3';
 
 function shuffle(array) {
   const copy = [...array];
@@ -24,20 +25,21 @@ const blockOptions = [
   { id: 'cinematica', label: 'Solo Cinemática y dinámica', match: (q) => q.category.toLowerCase().includes('cinemática') },
   { id: 'cnc', label: 'Solo Materiales y CNC', match: (q) => q.category.toLowerCase().includes('cnc') || q.category.toLowerCase().includes('materiales') },
   { id: 'energia', label: 'Solo Energía y trabajo', match: (q) => q.category.toLowerCase().includes('energía') },
-  { id: 'auto', label: 'Solo Automatización / control', match: (q) => q.category.toLowerCase().includes('automatización') || q.category.toLowerCase().includes('control') },
+  { id: 'robots', label: 'Solo robótica / control', match: (q) => q.category.toLowerCase().includes('robot') || q.category.toLowerCase().includes('control') },
   { id: 'integradores', label: 'Solo problemas integradores', match: (q) => q.category.toLowerCase().includes('integradores') },
   { id: 'basico', label: 'Solo banco básico chill', match: (q) => q.category.toLowerCase().includes('banco básico chill') },
-  { id: 'verificadas', label: 'Solo preguntas verificadas (internet)', match: (q) => q.category.toLowerCase().includes('preguntas verificadas') }
+  { id: 'verificadas', label: 'Solo preguntas verificadas', match: (q) => q.category.toLowerCase().includes('preguntas verificadas') || q.category.toLowerCase().includes('epe') }
 ];
 
 function calculateCategoryStats(quizQuestions, answers) {
   const stats = {};
   quizQuestions.forEach((q, idx) => {
-    const item = answers[idx];
+    const item = answers[idx] || { correct: false };
     if (!stats[q.category]) stats[q.category] = { total: 0, correct: 0 };
     stats[q.category].total += 1;
     if (item.correct) stats[q.category].correct += 1;
   });
+
   return Object.fromEntries(
     Object.entries(stats).map(([k, v]) => [k, { ...v, percent: Math.round((v.correct / v.total) * 100) }])
   );
@@ -134,7 +136,6 @@ export default function App() {
 
   function selectOption(option) {
     if (!current) return;
-
     if (mode === 'juego' && currentAnswer.completed) return;
     if (mode === 'estudio' && currentAnswer.correct) return;
 
@@ -182,7 +183,7 @@ export default function App() {
       categoryStats
     };
 
-    const newHistory = [entry, ...history].slice(0, 40);
+    const newHistory = [entry, ...history].slice(0, 60);
     setHistory(newHistory);
     localStorage.setItem(HISTORY_KEY, JSON.stringify(newHistory));
     setScreen('end');
@@ -204,8 +205,8 @@ export default function App() {
         <section className="card">
           <h1>🧠 CENEVAL Mecatrónica · Smart Trainer</h1>
           <p>
-            Banco de <strong>{questions.length} preguntas</strong>, con modo juego/estudio,
-            navegación por reactivos y adaptación a áreas débiles.
+            Banco de <strong>{questions.length} preguntas</strong> con fuentes, tips por reactivo,
+            modo juego/estudio y enfoque adaptativo.
           </p>
 
           <label htmlFor="player-name">Tu nombre (opcional)</label>
@@ -236,7 +237,10 @@ export default function App() {
             Activar banco adaptativo (más preguntas de tus áreas débiles)
           </label>
 
-          <button onClick={startGame}>Empezar</button>
+          <div className="question-actions">
+            <button onClick={startGame}>Empezar examen</button>
+            <button onClick={() => setScreen('study')}>Abrir biblioteca de estudio</button>
+          </div>
 
           <div className="stats-grid">
             <div>
@@ -252,6 +256,33 @@ export default function App() {
               </ul>
             </div>
           </div>
+        </section>
+      )}
+
+      {screen === 'study' && (
+        <section className="card">
+          <h2>📚 Biblioteca de estudio (leyes y ecuaciones clave)</h2>
+          <p>Resumen de ecuaciones importantes, tips de resolución y repaso rápido por tema.</p>
+          <div className="study-grid">
+            {studySections.map((section) => (
+              <article key={section.title} className="study-card">
+                <h3>{section.title}</h3>
+                <p>{section.summary}</p>
+                <strong>Ecuaciones clave:</strong>
+                <ul>
+                  {section.keyEquations.map((eq) => <li key={eq}><code>{eq}</code></li>)}
+                </ul>
+                <strong>Tips:</strong>
+                <ul>
+                  {section.tips.map((tip) => <li key={tip}>{tip}</li>)}
+                </ul>
+                {section.imageUrl && (
+                  <a href={section.imageUrl} target="_blank" rel="noreferrer">Ver imagen de apoyo</a>
+                )}
+              </article>
+            ))}
+          </div>
+          <button onClick={() => setScreen('start')}>Volver al inicio</button>
         </section>
       )}
 
@@ -273,7 +304,7 @@ export default function App() {
             {mode === 'estudio' && <button className="mark-btn" onClick={toggleHint}>💡 {currentAnswer.showHint ? 'Ocultar pista' : 'Ver pista'}</button>}
           </div>
 
-          {mode === 'estudio' && currentAnswer.showHint && <div className="hint">Pista: {current.hint}</div>}
+          {mode === 'estudio' && currentAnswer.showHint && <div className="hint">Pista específica: {current.hint}</div>}
 
           <h2>{current.question}</h2>
           <div className="options">
