@@ -17,6 +17,39 @@ const sourceCatalog = [
   { match: 'epe', source: 'Guía EPE + bibliografía técnica reportada', url: 'https://www.ceneval.edu.mx/' }
 ];
 
+const theoryProfiles = [
+  {
+    keys: ['circuit', 'ohm', 'resist', 'corriente', 'voltaje', 'potencia', 'kirchhoff'],
+    base: 'Base teórica chill: usa Ley de Ohm (V = I·R) y potencia (P = V·I = I²R = V²/R). Si hay varias mallas o nodos, aplica Leyes de Kirchhoff (suma de voltajes en lazo = 0 y suma de corrientes en nodo = 0).',
+    method: 'Pasos: 1) identifica serie/paralelo, 2) calcula equivalente, 3) resuelve variable pedida y 4) valida unidades (V, A, Ω, W).'
+  },
+  {
+    keys: ['cinemat', 'movimiento', 'velocidad', 'aceleraci', 'trayectoria', 'torque', 'fuerza'],
+    base: 'Base teórica chill: parte de cinemática y dinámica clásica. Usa x = x0 + v0·t + 0.5·a·t², v = v0 + a·t y, cuando aplica, ΣF = m·a y τ = F·r.',
+    method: 'Pasos: 1) define sistema y signos, 2) coloca datos en SI, 3) despeja incógnita, 4) revisa coherencia física (magnitud y sentido).'
+  },
+  {
+    keys: ['pid', 'control', 'lazo', 'plc', 'automatiz'],
+    base: 'Base teórica chill: en control industrial, el objetivo es minimizar error e(t)=r(t)-y(t) con acciones P, I y D, respetando estabilidad y tiempos de respuesta.',
+    method: 'Pasos: 1) define variable controlada, 2) identifica perturbaciones, 3) compara estrategia de control, 4) verifica seguridad/interlocks y robustez operacional.'
+  },
+  {
+    keys: ['red', 'profinet', 'ethercat', 'modbus', 'comunicacion', 'latencia', 'jitter'],
+    base: 'Base teórica chill: redes OT se eligen por determinismo, latencia y sincronización temporal (p. ej. IEEE 1588/PTP). El criterio principal es que el ciclo de control cumpla tiempo y confiabilidad.',
+    method: 'Pasos: 1) define requerimiento de ciclo, 2) evalúa topología y tolerancia a fallas, 3) valida diagnóstico/ciberseguridad, 4) selecciona protocolo compatible.'
+  },
+  {
+    keys: ['material', 'fatiga', 'goodman', 'deformacion', 'esfuerzo'],
+    base: 'Base teórica chill: resistencia de materiales combina relaciones esfuerzo-deformación (σ=F/A, ε=ΔL/L) y criterios de diseño (fatiga Goodman/Soderberg según caso).',
+    method: 'Pasos: 1) modela carga estática/alternante, 2) calcula esfuerzo equivalente, 3) aplica factor de seguridad, 4) confirma condición de operación real.'
+  }
+];
+
+const defaultTheory = {
+  base: 'Base teórica chill: identifica el principio físico o de ingeniería que gobierna el reactivo y usa una ecuación o criterio técnico verificable.',
+  method: 'Pasos: ordena datos, modela variables, aplica fórmula/criterio y valida unidades, límites y sentido práctico.'
+};
+
 function normalize(text) {
   return (text || '')
     .toLowerCase()
@@ -37,7 +70,6 @@ function ensureQuestionText(question) {
   let text = (question.question || '').trim();
   const lower = normalize(text);
 
-  // Arregla enunciados cortos tipo "Brazo 2 m con ..." para que digan qué calcular.
   if (
     lower.startsWith('brazo ') ||
     lower.startsWith('motor ') ||
@@ -54,13 +86,38 @@ function ensureQuestionText(question) {
   return `¿${text}?`;
 }
 
+function getTheoryProfile(question) {
+  const searchable = `${question.category || ''} ${question.subcategory || ''} ${question.question || ''} ${question.explanation || ''}`;
+  const normalized = normalize(searchable);
+  return theoryProfiles.find((profile) => profile.keys.some((key) => normalized.includes(key))) || defaultTheory;
+}
+
+function buildRichDeepExplanation(question) {
+  const theory = getTheoryProfile(question);
+  const baseExplanation = question.deepExplanation || question.explanation || 'Analiza el concepto base antes de responder.';
+  return `${theory.base} ${theory.method} Aplicación al reactivo: ${baseExplanation}`;
+}
+
+function buildRichExplanation(question) {
+  if (question.explanation) return question.explanation;
+  const theory = getTheoryProfile(question);
+  return `${theory.base} Respuesta correcta por consistencia con el modelo y los datos.`;
+}
+
+function buildHint(question) {
+  if (question.hint) return question.hint;
+  const theory = getTheoryProfile(question);
+  return `Tip chill: ${theory.method}`;
+}
+
 function buildOptionExplanations(question) {
   const map = question.optionExplanations || {};
+  const theory = getTheoryProfile(question);
   return Object.fromEntries(
     question.options.map((opt) => {
       if (map[opt]) return [opt, map[opt]];
-      if (opt === question.answer) return [opt, 'Es correcta porque coincide con el modelo/fórmula y datos planteados.'];
-      return [opt, 'No es la mejor opción porque no satisface completamente la definición o el cálculo del reactivo.'];
+      if (opt === question.answer) return [opt, `Es correcta porque respeta el criterio técnico y la base teórica del tema. ${theory.base}`];
+      return [opt, 'No es la mejor opción porque rompe una condición del modelo, una unidad, o el criterio de diseño solicitado.'];
     })
   );
 }
@@ -77,11 +134,9 @@ function enrichQuestion(question) {
     ...sourced,
     question: ensureQuestionText(sourced),
     options: sanitizeOptions(sourced),
-    hint: sourced.hint || 'Tip: identifica qué pide exactamente, define variables y valida unidades.',
-    explanation: sourced.explanation || 'Revisa el concepto base y vuelve a resolver con datos ordenados.',
-    deepExplanation:
-      sourced.deepExplanation ||
-      `${sourced.explanation || 'Revisa el concepto base.'} Paso recomendado: interpreta cada variable, aplica fórmula con unidades SI y confirma orden de magnitud.`
+    hint: buildHint(sourced),
+    explanation: buildRichExplanation(sourced),
+    deepExplanation: buildRichDeepExplanation(sourced)
   };
   return { ...clean, optionExplanations: buildOptionExplanations(clean) };
 }
