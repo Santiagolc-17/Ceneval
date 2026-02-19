@@ -1,20 +1,22 @@
 # CENEVAL Mecatrónica (React + Vite)
 
-Simulador de examen tipo CENEVAL, dificultad **alta**, para Mecatrónica.
+Simulador tipo CENEVAL para Mecatrónica con banco ampliado y enfoque técnico.
 
-## Estructura del banco (200 preguntas)
+## ¿Qué incluye ahora?
 
-- Diseño de sistemas mecatrónicos → Sistemas mecánicos
-- Sistemas electrónicos, analógicos, digitales y de potencia → Dispositivos electrónicos
-- Sistemas de automatización y control analógico y digital → Sistemas de control
-- Modelado y simulación de sistemas mecatrónicos → Sistemas de control
-- Implementación de sistemas mecatrónicos → Tecnologías CAD, CAM y CAE
-- Implementación de sistemas mecatrónicos → Sensores y actuadores
-- Instrumentación de sistemas mecatrónicos → Sensores y actuadores
-- Programación de sistemas electrónicos → Dispositivos electrónicos
-- Integración de tecnologías para sistemas mecatrónicos → Planeación y evaluación de proyectos
-- Integración de tecnologías para sistemas mecatrónicos → Redes industriales
-- Integración de tecnologías para sistemas mecatrónicos → Automatización y control industrial
+- **400 preguntas en total**:
+  - 200 preguntas de nivel difícil (banco principal).
+  - 100 preguntas adicionales basadas en tus temas de:
+    - Materiales y manufactura CNC.
+    - Cinemática y dinámica.
+    - Energía y trabajo.
+    - Automatización y programación.
+    - Problemas integradores con datos reales.
+  - 100 preguntas extra de repaso **básico/chill** con retroalimentación.
+- Orden aleatorio de preguntas y opciones en cada sesión.
+- Dos modos:
+  - **Modo juego** (puntaje clásico).
+  - **Modo estudio** (repaso con retroalimentación inmediata).
 
 ## Requisitos
 

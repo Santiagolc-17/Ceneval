@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { questions } from './questions';
+import { questions } from './allQuestions.js';
 
 function shuffle(array) {
   const copy = [...array];
@@ -19,6 +19,7 @@ function getResultMessage(percent) {
 
 export default function App() {
   const [screen, setScreen] = useState('start');
+  const [mode, setMode] = useState('juego');
   const [playerNameInput, setPlayerNameInput] = useState('');
   const [player, setPlayer] = useState('Jugador');
   const [quizQuestions, setQuizQuestions] = useState([]);
@@ -27,11 +28,7 @@ export default function App() {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const current = quizQuestions[index];
-  const shuffledOptions = useMemo(
-    () => (current ? shuffle(current.options) : []),
-    [current]
-  );
-
+  const shuffledOptions = useMemo(() => (current ? shuffle(current.options) : []), [current]);
   const isAnswered = selectedOption !== null;
   const isCorrect = isAnswered && selectedOption === current?.answer;
 
@@ -47,9 +44,7 @@ export default function App() {
   function selectOption(option) {
     if (isAnswered) return;
     setSelectedOption(option);
-    if (option === current.answer) {
-      setScore((prev) => prev + 1);
-    }
+    if (option === current.answer) setScore((prev) => prev + 1);
   }
 
   function nextQuestion() {
@@ -69,8 +64,8 @@ export default function App() {
         <section className="card">
           <h1>🧠 CENEVAL Mecatrónica · Nivel Difícil</h1>
           <p>
-            Simulador visual con <strong>200 preguntas difíciles</strong> de Mecatrónica.
-            Elige la opción correcta y revisa la retroalimentación técnica.
+            Simulador visual con <strong>{questions.length} preguntas</strong>. Orden aleatorio,
+            retroalimentación y dos modos: juego y estudio.
           </p>
           <label htmlFor="player-name">Tu nombre (opcional)</label>
           <input
@@ -81,7 +76,17 @@ export default function App() {
             placeholder="Ej. Alex"
             maxLength={20}
           />
-          <button onClick={startGame}>Empezar partida</button>
+
+          <label>Modo</label>
+          <div className="mode-wrap">
+            <button className={mode === 'juego' ? 'mode-btn active' : 'mode-btn'} onClick={() => setMode('juego')}>
+              🎮 Juego
+            </button>
+            <button className={mode === 'estudio' ? 'mode-btn active' : 'mode-btn'} onClick={() => setMode('estudio')}>
+              📘 Estudio
+            </button>
+          </div>
+          <button onClick={startGame}>Empezar</button>
         </section>
       )}
 
@@ -94,7 +99,7 @@ export default function App() {
             </div>
             <div>
               <span>{index + 1} / {quizQuestions.length}</span>
-              <span className="score">Puntos: {score}</span>
+              <span className="score">{mode === 'juego' ? `Puntos: ${score}` : `Aciertos: ${score}`}</span>
             </div>
           </div>
 
@@ -103,9 +108,7 @@ export default function App() {
             {shuffledOptions.map((option) => {
               const classes = ['option-btn'];
               if (isAnswered && option === current.answer) classes.push('correct');
-              if (isAnswered && option === selectedOption && option !== current.answer) {
-                classes.push('wrong');
-              }
+              if (isAnswered && option === selectedOption && option !== current.answer) classes.push('wrong');
 
               return (
                 <button
@@ -123,10 +126,10 @@ export default function App() {
           {isAnswered && (
             <div className={`feedback ${isCorrect ? 'ok' : 'bad'}`}>
               {isCorrect ? (
-                <p>✅ <strong>¡Bien!</strong> {current.explanation}</p>
+                <p>✅ <strong>Correcto.</strong> {current.explanation}</p>
               ) : (
                 <p>
-                  ❌ <strong>Ups.</strong> La respuesta correcta es <strong>{current.answer}</strong>.
+                  ❌ <strong>Incorrecto.</strong> La correcta es <strong>{current.answer}</strong>.
                   <br />
                   {current.explanation}
                 </p>
@@ -134,17 +137,18 @@ export default function App() {
             </div>
           )}
 
-          {isAnswered && <button onClick={nextQuestion}>Siguiente</button>}
+          {isAnswered && <button onClick={nextQuestion}>{mode === 'estudio' ? 'Siguiente tema' : 'Siguiente'}</button>}
         </section>
       )}
 
       {screen === 'end' && (
         <section className="card">
-          <h2>🏁 Fin de la partida</h2>
+          <h2>🏁 Fin de la sesión ({mode})</h2>
           <p>
             {player}, obtuviste {score}/{quizQuestions.length} ({percent}%). {getResultMessage(percent)}
           </p>
-          <button onClick={startGame}>Jugar de nuevo</button>
+          <button onClick={startGame}>Reintentar</button>
+          <button onClick={() => setScreen('start')}>Cambiar modo</button>
         </section>
       )}
     </main>
