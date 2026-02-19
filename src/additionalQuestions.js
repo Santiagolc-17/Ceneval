@@ -35,7 +35,7 @@ const requestedBlueprint = [
       ['Aceleración centrípeta con v=3 m/s y r=2 m', '4.5 m/s²', ['1.5 m/s²', '3 m/s²', '9 m/s²'], 'a_c=v²/r.'],
       ['Aceleración de Coriolis con vr=0.5 y ω=1', '1 m/s²', ['0.5 m/s²', '2 m/s²', '0.25 m/s²'], 'a_cor=2ωvr.'],
       ['Cinemática directa e inversa en robot', 'Directa: articulaciones→pose; inversa: pose→articulaciones', ['Son idénticas', 'Solo aplican a CNC', 'No usan trigonometría'], 'Problemas duales de manipulación.'],
-      ['Brazo 90° en 2 s, L=1.5 m', 'ω=π/4 rad/s y vt≈1.18 m/s', ['ω=π/2 y vt≈2.36', 'ω=1 y vt=1', 'ω=0.5 y vt=0.75'], 'ω=Δθ/Δt y vt=ωL.'],
+      ['Un brazo gira 90° en 2 s con L=1.5 m. ¿Cuáles son ω y v_t?', 'ω=π/4 rad/s y vt≈1.18 m/s', ['ω=π/2 y vt≈2.36', 'ω=1 y vt=1', 'ω=0.5 y vt=0.75'], 'ω=Δθ/Δt y vt=ωL.'],
       ['Radio de curvatura', 'Radio del círculo osculador de la trayectoria', ['Distancia al origen', 'Longitud del brazo', 'Área barrida'], 'Mide qué tan cerrada es la curva.'],
       ['Diferencia a tangencial y a centrípeta', 'Tangencial cambia rapidez; centrípeta cambia dirección', ['Ambas cambian solo rapidez', 'Ambas son paralelas a v', 'No se usan en rotación'], 'Se descomponen en marco normal-tangencial.'],
       ['Si θ(t)=t², ω(t)=', '2t', ['t²', 't/2', '2'], 'ω=dθ/dt.']
@@ -56,7 +56,7 @@ const requestedBlueprint = [
       ['Trabajo positivo y negativo', 'Depende de si fuerza ayuda o se opone al desplazamiento', ['Siempre positivo', 'Siempre negativo', 'Solo en fluidos'], 'Signo define aporte o extracción de energía.'],
       ['F(x)=10x de 0 a 2 m', '20 J', ['10 J', '40 J', '5 J'], '∫10x dx entre 0 y 2 =20.'],
       ['Trabajo integral generaliza W=F·d', 'Permite fuerzas variables y trayectorias curvas', ['Solo en línea recta', 'Solo en estática', 'Elimina vectores'], 'Forma general W=∫F·dr.'],
-      ['Brazo 4 kg acelera 2 m/s² por 3 s (v0=0)', 'v=6 m/s y ΔK=72 J', ['v=3 y ΔK=18', 'v=2 y ΔK=8', 'v=12 y ΔK=288'], 'v=at y K=1/2mv².']
+      ['Un brazo de 4 kg acelera 2 m/s² por 3 s (v0=0). Calcula v_f y ΔK.', 'v=6 m/s y ΔK=72 J', ['v=3 y ΔK=18', 'v=2 y ΔK=8', 'v=12 y ΔK=288'], 'v=at y K=1/2mv².']
     ]
   },
   {
@@ -79,7 +79,7 @@ const requestedBlueprint = [
     category: 'Problemas integradores con datos reales',
     count: 65,
     seeds: [
-      ['Brazo 2 m con ω=0.5 y vr=0.2', 'vtotal≈1.02 m/s', ['0.7', '1.5', '2.0'], 'vt=ωr=1; v=√(vt²+vr²).'],
+      ['Brazo de 2 m con ω=0.5 rad/s y v_r=0.2 m/s. Calcula la rapidez total del extremo.', 'vtotal≈1.02 m/s', ['0.7', '1.5', '2.0'], 'vt=ωr=1; v=√(vt²+vr²).'],
       ['Motor en brazo 1.5 m con α=2', 'at=3 m/s²', ['1.5', '0.75', '6'], 'at=αr.'],
       ['Trabajo con F(x)=5x², 0→0.3', '0.045 J', ['0.09', '0.15', '0.015'], 'W=∫5x²dx=(5/3)x³.'],
       ['K de brazo m=3 con vr=1 y vt=0.5', '1.875 J', ['1.5', '2.25', '3.0'], 'K=1/2m(vr²+vt²).'],
@@ -104,7 +104,7 @@ function expandRequestedSections() {
       const seed = section.seeds[i % section.seeds.length];
       built.push({
         category: `Banco adicional · ${section.category}`,
-        question: `${seed[0]} ${i >= section.seeds.length ? `(variante ${Math.floor(i / section.seeds.length) + 1})` : ''}`.trim(),
+        question: seed[0],
         options: [seed[1], ...seed[2]],
         answer: seed[1],
         explanation: `${seed[3]} [Retro chill: repasa fórmula y unidades.]`

@@ -4,7 +4,7 @@ Simulador tipo CENEVAL para Mecatrónica orientado a preparación real (EPE + EG
 
 ## ¿Qué incluye ahora?
 
-- **Banco unificado y depurado** (preguntas base + adicionales + verificadas + EPE).
+- **Banco unificado y depurado** (base + adicionales + verificadas + EPE + 200 de circuitos/automatización).
 - Eliminación de reactivos repetidos por normalización de texto/categoría.
 - Enriquecimiento automático por reactivo:
   - `hint` (pista),
@@ -12,6 +12,8 @@ Simulador tipo CENEVAL para Mecatrónica orientado a preparación real (EPE + EG
   - `source` y `sourceUrl` (fuente),
   - `optionExplanations` (por qué sí / por qué no cada opción).
 - Modo **Juego** (intento único) y **Estudio** (pista + reintento hasta acertar).
+- Longitud configurable de sesión (el usuario decide cuántas preguntas resolver).
+- Opción de estudio mixto (teoría + preguntas durante la misma sesión).
 - Navegación por reactivos con:
   - marcar duda,
   - panel de estado,

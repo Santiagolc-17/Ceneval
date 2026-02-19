@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { questions } from './allQuestions.js';
 import { studySections } from './studyContent.js';
 
-const HISTORY_KEY = 'ceneval_history_v4';
+const HISTORY_KEY = 'ceneval_history_v5';
 
 function shuffle(array) {
   const copy = [...array];
@@ -33,9 +33,9 @@ const blockOptions = [
   { id: 'cnc', label: 'Solo Materiales y CNC', match: (q) => normalize(q.category).includes('cnc') || normalize(q.category).includes('materiales') },
   { id: 'energia', label: 'Solo Energía y trabajo', match: (q) => normalize(q.category).includes('energia') || normalize(q.category).includes('potencia') },
   { id: 'robots', label: 'Solo robótica / control', match: (q) => normalize(q.category).includes('robot') || normalize(q.category).includes('control') || normalize(q.category).includes('laplace') || normalize(q.category).includes('z') },
-  { id: 'bits', label: 'Solo electrónica / bits', match: (q) => normalize(q.category).includes('bit') || normalize(q.category).includes('mosfet') || normalize(q.category).includes('flip-flop') || normalize(q.category).includes('digital') },
+  { id: 'bits', label: 'Solo electrónica / bits', match: (q) => normalize(q.category).includes('bit') || normalize(q.category).includes('mosfet') || normalize(q.category).includes('flip-flop') || normalize(q.category).includes('digital') || normalize(q.category).includes('circuitos') },
   { id: 'economica', label: 'Solo proyectos / ingeniería económica', match: (q) => normalize(q.category).includes('economica') || normalize(q.category).includes('pert') || normalize(q.category).includes('proyecto') || normalize(q.category).includes('tmar') },
-  { id: 'verificadas', label: 'Solo preguntas verificadas', match: (q) => normalize(q.category).includes('verificada') || normalize(q.category).includes('epe') }
+  { id: 'verificadas', label: 'Solo verificadas / EPE', match: (q) => normalize(q.category).includes('verificada') || normalize(q.category).includes('epe') }
 ];
 
 function calculateCategoryStats(quizQuestions, answers) {
@@ -82,6 +82,9 @@ export default function App() {
   const [adaptiveEnabled, setAdaptiveEnabled] = useState(true);
   const [playerNameInput, setPlayerNameInput] = useState('');
   const [player, setPlayer] = useState('Jugador');
+  const [questionLimit, setQuestionLimit] = useState(40);
+  const [mixedStudy, setMixedStudy] = useState(true);
+  const [activeStudyId, setActiveStudyId] = useState(studySections[0]?.id || 'cinematica');
 
   const [quizQuestions, setQuizQuestions] = useState([]);
   const [index, setIndex] = useState(0);
@@ -105,6 +108,7 @@ export default function App() {
   const currentAnswer = answers[index] || { marked: false, completed: false, correct: false, attempts: 0, showHint: false };
   const shuffledOptions = useMemo(() => (current ? shuffle(current.options) : []), [current]);
   const relatedCards = useMemo(() => (current ? getRelevantStudyCards(current.category) : []), [current]);
+  const activeStudy = useMemo(() => studySections.find((s) => s.id === activeStudyId) || studySections[0], [activeStudyId]);
 
   const ranking = aggregatePerformance(history);
   const weak5 = ranking.slice(0, 5);
@@ -115,7 +119,7 @@ export default function App() {
     const filtered = questions.filter(block.match);
     const weakCategories = weak5.map((w) => w.category);
     const adaptivePool = buildAdaptivePool(filtered, weakCategories, adaptiveEnabled);
-    const selected = shuffle(adaptivePool);
+    const selected = shuffle(adaptivePool).slice(0, Math.max(5, Math.min(questionLimit, adaptivePool.length)));
 
     setPlayer(playerNameInput.trim() || 'Jugador');
     setQuizQuestions(selected);
@@ -192,7 +196,7 @@ export default function App() {
       categoryStats
     };
 
-    const newHistory = [entry, ...history].slice(0, 60);
+    const newHistory = [entry, ...history].slice(0, 80);
     setHistory(newHistory);
     localStorage.setItem(HISTORY_KEY, JSON.stringify(newHistory));
     setScreen('end');
@@ -213,10 +217,7 @@ export default function App() {
       {screen === 'start' && (
         <section className="card">
           <h1>🧠 CENEVAL Mecatrónica · Smart Trainer</h1>
-          <p>
-            Banco de <strong>{questions.length} preguntas</strong> con fuentes, explicación profunda,
-            tips y formulario de apoyo durante el examen.
-          </p>
+          <p>Banco de <strong>{questions.length} preguntas</strong>, fuentes y teoría contextual.</p>
 
           <label htmlFor="player-name">Tu nombre (opcional)</label>
           <input id="player-name" type="text" value={playerNameInput} onChange={(event) => setPlayerNameInput(event.target.value)} placeholder="Ej. Alex" maxLength={20} />
@@ -232,9 +233,17 @@ export default function App() {
             {blockOptions.map((block) => <option key={block.id} value={block.id}>{block.label}</option>)}
           </select>
 
+          <label htmlFor="limit-input">¿Cuántas preguntas quieres en esta sesión?</label>
+          <input id="limit-input" type="number" min="5" max="120" value={questionLimit} onChange={(e) => setQuestionLimit(Number(e.target.value || 40))} />
+
           <label className="check-wrap">
             <input type="checkbox" checked={adaptiveEnabled} onChange={(e) => setAdaptiveEnabled(e.target.checked)} />
-            Activar banco adaptativo (prioriza tus áreas débiles)
+            Activar banco adaptativo (prioriza áreas débiles)
+          </label>
+
+          <label className="check-wrap">
+            <input type="checkbox" checked={mixedStudy} onChange={(e) => setMixedStudy(e.target.checked)} />
+            En modo estudio: mezclar teoría + reactivos durante la sesión
           </label>
 
           <div className="question-actions">
@@ -258,40 +267,49 @@ export default function App() {
       {screen === 'study' && (
         <section className="card">
           <h2>📚 Formulario y teoría guiada</h2>
-          <p>Cada sección incluye: fórmula, significado de letras, 3 preguntas teóricas y 3 ejercicios resueltos.</p>
-          <div className="study-grid">
-            {studySections.map((section) => (
-              <article key={section.id} className="study-card">
-                <h3>{section.title}</h3>
-                <p>{section.summary}</p>
+          <p>Navega por sección: ecuaciones legibles, significado de letras, teoría y ejercicios.</p>
 
-                <strong>Formulario:</strong>
-                {section.formulaSheet.map((f) => (
-                  <div key={f.formula} className="formula-box">
-                    <code>{f.formula}</code>
-                    <ul>
-                      {Object.entries(f.variables).map(([k, v]) => <li key={`${f.formula}-${k}`}><strong>{k}</strong>: {v}</li>)}
-                    </ul>
-                  </div>
-                ))}
-
-                <strong>3 preguntas teóricas:</strong>
-                <ul>
-                  {section.theoryQuestions.map((t) => <li key={t.question}><strong>{t.question}</strong><br />{t.answer}</li>)}
-                </ul>
-
-                <strong>3 ejercicios:</strong>
-                <ul>
-                  {section.exercises.map((e) => <li key={e.problem}><strong>{e.problem}</strong><br />{e.solution}</li>)}
-                </ul>
-
-                <strong>Tips:</strong>
-                <ul>{section.tips.map((tip) => <li key={tip}>{tip}</li>)}</ul>
-                {section.imageUrl && <a href={section.imageUrl} target="_blank" rel="noreferrer">Ver imagen de apoyo</a>}
-              </article>
+          <div className="section-tabs">
+            {studySections.map((s) => (
+              <button key={s.id} className={s.id === activeStudy.id ? 'mode-btn active' : 'mode-btn'} onClick={() => setActiveStudyId(s.id)}>
+                {s.title}
+              </button>
             ))}
           </div>
-          <button onClick={() => setScreen('start')}>Volver al menú principal</button>
+
+          <article className="study-card">
+            <h3>{activeStudy.title}</h3>
+            <p>{activeStudy.summary}</p>
+
+            <strong>Formulario:</strong>
+            {activeStudy.formulaSheet.map((f) => (
+              <div key={f.formula} className="formula-box">
+                <code>{f.formula}</code>
+                <ul>
+                  {Object.entries(f.variables).map(([k, v]) => <li key={`${f.formula}-${k}`}><strong>{k}</strong>: {v}</li>)}
+                </ul>
+              </div>
+            ))}
+
+            <strong>3 preguntas teóricas:</strong>
+            <ul>
+              {activeStudy.theoryQuestions.map((t) => <li key={t.question}><strong>{t.question}</strong><br />{t.answer}</li>)}
+            </ul>
+
+            <strong>3 ejercicios resueltos:</strong>
+            <ul>
+              {activeStudy.exercises.map((e) => <li key={e.problem}><strong>{e.problem}</strong><br />{e.solution}</li>)}
+            </ul>
+
+            <strong>Tips:</strong>
+            <ul>{activeStudy.tips.map((tip) => <li key={tip}>{tip}</li>)}</ul>
+            {activeStudy.imageUrl && <a href={activeStudy.imageUrl} target="_blank" rel="noreferrer">Ver imagen de apoyo</a>}
+          </article>
+
+          <div className="question-actions">
+            <button onClick={() => setScreen('start')}>Volver al menú principal</button>
+            <button onClick={() => { setMode('estudio'); setScreen('start'); }}>Ir a practicar en modo estudio</button>
+          </div>
         </section>
       )}
 
@@ -316,13 +334,26 @@ export default function App() {
 
           {mode === 'estudio' && currentAnswer.showHint && <div className="hint">Pista específica: {current.hint}</div>}
 
+          {mixedStudy && mode === 'estudio' && relatedCards.length > 0 && (
+            <div className="formula-panel">
+              <strong>🧩 Micro-bloque teórico antes de responder:</strong>
+              <p>{relatedCards[0].summary}</p>
+              <div className="formula-box">
+                <code>{relatedCards[0].formulaSheet[0].formula}</code>
+                <ul>
+                  {Object.entries(relatedCards[0].formulaSheet[0].variables).map(([k, v]) => <li key={`mix-${k}`}><strong>{k}</strong>: {v}</li>)}
+                </ul>
+              </div>
+            </div>
+          )}
+
           {relatedCards.length > 0 && (
             <details className="formula-panel">
               <summary>📐 Ver formulario para este reactivo</summary>
               {relatedCards.map((section) => (
                 <div key={`rel-${section.id}`}>
                   <h4>{section.title}</h4>
-                  {section.formulaSheet.slice(0, 3).map((f) => (
+                  {section.formulaSheet.slice(0, 2).map((f) => (
                     <div key={`relf-${section.id}-${f.formula}`} className="formula-box">
                       <code>{f.formula}</code>
                       <ul>
@@ -341,7 +372,6 @@ export default function App() {
               const classes = ['option-btn'];
               if ((mode === 'juego' ? currentAnswer.completed : currentAnswer.correct) && option === current.answer) classes.push('correct');
               if (currentAnswer.selected === option && ((mode === 'juego' && currentAnswer.completed && !currentAnswer.correct) || (mode === 'estudio' && !currentAnswer.correct && currentAnswer.attempts > 0))) classes.push('wrong');
-
               return (
                 <button key={option} className={classes.join(' ')} onClick={() => selectOption(option)} disabled={mode === 'juego' ? currentAnswer.completed : currentAnswer.correct}>
                   {option}

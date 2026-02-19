@@ -2,6 +2,7 @@ import { questions as baseQuestions } from './questions.js';
 import { additionalQuestions } from './additionalQuestions.js';
 import { internetQuestions } from './internetQuestions.js';
 import { epeQuestions } from './epeQuestions.js';
+import { circuitsQuestions } from './circuitsQuestions.js';
 
 const sourceCatalog = [
   { match: 'cinemática', source: 'OpenStax University Physics', url: 'https://openstax.org/details/books/university-physics-volume-1' },
@@ -33,7 +34,22 @@ function attachSource(question) {
 }
 
 function ensureQuestionText(question) {
-  const text = (question.question || '').trim();
+  let text = (question.question || '').trim();
+  const lower = normalize(text);
+
+  // Arregla enunciados cortos tipo "Brazo 2 m con ..." para que digan qué calcular.
+  if (
+    lower.startsWith('brazo ') ||
+    lower.startsWith('motor ') ||
+    lower.startsWith('cilindro ') ||
+    lower.startsWith('fresa ') ||
+    lower.startsWith('desplazamiento de')
+  ) {
+    if (!lower.includes('calcula') && !lower.includes('determine') && !lower.includes('cual')) {
+      text = `${text} ¿Cuál es el resultado correcto solicitado (magnitud principal)?`;
+    }
+  }
+
   if (text.includes('?')) return text;
   return `¿${text}?`;
 }
@@ -82,5 +98,5 @@ function dedupeQuestions(all) {
   return out;
 }
 
-const raw = [...baseQuestions, ...additionalQuestions, ...internetQuestions, ...epeQuestions].map(enrichQuestion);
+const raw = [...baseQuestions, ...additionalQuestions, ...internetQuestions, ...epeQuestions, ...circuitsQuestions].map(enrichQuestion);
 export const questions = dedupeQuestions(raw);
