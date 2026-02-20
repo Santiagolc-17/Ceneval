@@ -4,7 +4,7 @@ Simulador tipo CENEVAL para Mecatrónica orientado a preparación real (EPE + EG
 
 ## ¿Qué incluye ahora?
 
-- **Banco unificado y depurado** (base + adicionales + verificadas + EPE + 200 de circuitos/automatización).
+- **Banco unificado y depurado** (base + adicionales + verificadas + EPE + 200 de circuitos/automatización + 50 estilo EGEL de PLC/control/motores/integración con fuentes).
 - Eliminación de reactivos repetidos por normalización de texto/categoría.
 - Enriquecimiento automático por reactivo:
   - `hint` (pista),

@@ -159,4 +159,101 @@ function buildBasic100() {
   });
 }
 
-export const additionalQuestions = [...expandRequestedSections(), ...buildBasic100()];
+
+
+const santiQuestionSets = [
+  {
+    category: 'Banco adicional · PLC y lógica (estilo EGEL)',
+    source: 'IEC 61131-3 / PLCopen',
+    sourceUrl: 'https://plcopen.org/standards/logic/iec-61131-3/',
+    items: [
+      ['En ladder, contactos en serie representan:', 'AND', ['OR', 'NOT', 'XOR'], 'En serie ambas condiciones deben ser verdaderas para energizar la salida.', 'Tip de examen: serie horizontal normalmente equivale a compuerta AND.'],
+      ['Un contacto normalmente cerrado (NC) conduce cuando la variable está en:', '0 lógico', ['1 lógico', 'siempre en 1', 'siempre en 0'], 'El contacto NC implementa la negación de la variable de entrada.', 'Tip de examen: NC se interpreta como NOT X.'],
+      ['Un temporizador TON activa su salida cuando:', 'Tiempo acumulado ≥ preajuste', ['la entrada cambia a 1', 'la entrada se desactiva', 'arranca el PLC'], 'TON es retardo a la conexión: requiere que el tiempo transcurrido llegue al valor programado.', 'Tip de examen: si no se cumple el tiempo, Q sigue en 0.'],
+      ['Si la entrada de un TON se apaga antes del tiempo programado:', 'El acumulado se reinicia', ['se congela', 'se mantiene y continúa', 'se acelera'], 'En TON no retentivo, al caer la entrada el acumulador vuelve a cero.', 'Tip de examen: TON clásico se resetea con IN=0.'],
+      ['En ladder, ramas en paralelo implementan:', 'OR', ['AND', 'NAND', 'XOR'], 'Con ramas paralelas basta una ruta verdadera para energizar la salida.', 'Tip de examen: paralelo = suma lógica.'],
+      ['Un PLC se define mejor como:', 'Controlador lógico programable', ['sensor inteligente', 'fuente de 24 VDC', 'motor de proceso'], 'Ejecuta lógica secuencial/combinacional para controlar actuadores.', 'Tip de examen: PLC es el “cerebro” de la celda.'],
+      ['El bit DN (done) de un temporizador indica que:', 'El tiempo programado fue alcanzado', ['hay falla del módulo', 'el temporizador se reseteó', 'hay alarma de hardware'], 'DN cambia a 1 al cumplirse el tiempo preestablecido.', 'Tip de examen: DN = condición cumplida.'],
+      ['Un contador CTU incrementa su cuenta en:', 'Flanco ascendente', ['nivel bajo sostenido', 'nivel alto sostenido', 'cada segundo'], 'CTU cuenta transiciones 0→1 para evitar múltiples conteos por estado fijo.', 'Tip de examen: recuerda edge detection.'],
+      ['Un sensor inductivo detecta principalmente:', 'Metales', ['plásticos', 'luz visible', 'temperatura'], 'Opera por variación de campo electromagnético frente a material conductor.', 'Tip de examen: metal cercano → inductivo.'],
+      ['Un sensor capacitivo detecta:', 'Materiales metálicos y no metálicos', ['solo metales ferrosos', 'solo objetos luminosos', 'solo sonido'], 'Detecta cambios de capacitancia del entorno (sólidos o líquidos).', 'Tip de examen: granos y líquidos suelen ir con capacitivo.'],
+      ['Un sensor fotoeléctrico basa su funcionamiento en:', 'Emisión/recepción de luz', ['inducción magnética', 'deformación mecánica', 'efecto térmico'], 'Detecta interrupción o reflexión de un haz óptico sin contacto físico.', 'Tip de examen: ideal para conteo y presencia sin contacto.'],
+      ['Un relevador térmico protege principalmente contra:', 'Sobrecarga prolongada', ['cortocircuito instantáneo', 'fuga a tierra', 'bajo factor de potencia'], 'Modela calentamiento del motor y dispara por corriente elevada sostenida.', 'Tip de examen: cortocircuito rápido se atiende con interruptor/fusible.'],
+      ['Para Y = X0 AND NOT X1, la salida se activa cuando:', 'X0=1 y X1=0', ['X0=1 y X1=1', 'X0=0 y X1=0', 'X0=0 y X1=1'], 'La condición exige simultáneamente verdad en X0 y negación de X1.', 'Tip de examen: traduce primero NOT y luego evalúa AND.'],
+      ['TOF es un temporizador de:', 'Retardo a la desconexión', ['retardo a la conexión', 'pulso monestable', 'conteo ascendente'], 'Mantiene salida activa un tiempo después de desactivar la entrada.', 'Tip de examen: TON enciende tarde; TOF apaga tarde.'],
+      ['La función latch en PLC se utiliza para:', 'Memorizar estado', ['medir temperatura', 'convertir analógico-digital', 'filtrar ruido de red'], 'Set/Reset conserva una condición aunque la entrada original desaparezca.', 'Tip de examen: latch = memoria bistable.']
+    ]
+  },
+  {
+    category: 'Banco adicional · Control clásico (estilo EGEL)',
+    source: 'Feedback Systems - Åström & Murray',
+    sourceUrl: 'https://fbsbook.org/',
+    items: [
+      ['Objetivo principal del control automático industrial:', 'Estabilidad con desempeño deseado', ['solo minimizar costo de sensores', 'maximizar ganancia sin límite', 'eliminar todo error instantáneo'], 'El diseño busca mantener estabilidad, tiempo de respuesta y precisión.', 'Tip de examen: si aparece estabilidad vs otra opción, suele dominar estabilidad.'],
+      ['El error de seguimiento en lazo cerrado se define como:', 'e(t)=r(t)-y(t)', ['e(t)=y(t)-r(t)', 'e(t)=r(t)+y(t)', 'e(t)=u(t)-y(t)'], 'Es la diferencia entre referencia y salida medida.', 'Tip de examen: r menos y, no al revés.'],
+      ['Si un polo dominante tiene parte real positiva, el sistema es:', 'Inestable', ['críticamente amortiguado', 'estable asintóticamente', 'marginalmente estable siempre'], 'Polos en semiplano derecho producen crecimiento exponencial en respuesta.', 'Tip de examen: Re(polo)>0 implica divergencia.'],
+      ['Incrementar demasiado Kp suele provocar:', 'Mayor sobreimpulso y oscilación', ['eliminar todo ruido', 'hacer el sistema más lento', 'anular dinámica transitoria'], 'Ganancia alta acelera pero reduce márgenes de estabilidad.', 'Tip de examen: rapidez y robustez siempre se balancean.'],
+      ['La acción integral Ki se usa principalmente para:', 'Reducir error en estado estacionario', ['filtrar ruido de alta frecuencia', 'aumentar ancho de banda del sensor', 'eliminar saturación del actuador'], 'La integración acumula error y corrige sesgos persistentes.', 'Tip de examen: Ki combate error permanente.'],
+      ['La acción derivativa Kd aporta sobre todo:', 'Amortiguamiento de la respuesta transitoria', ['eliminar offset estático por sí sola', 'aumentar error permanente', 'convertir lazo cerrado en abierto'], 'La derivada anticipa cambios y reduce sobreimpulso.', 'Tip de examen: Kd ayuda a “frenar” cambios rápidos.'],
+      ['Una respuesta subamortiguada se caracteriza por:', 'Oscilaciones antes de asentarse', ['respuesta instantánea sin sobreimpulso', 'crecimiento ilimitado', 'error cero inmediato'], 'ζ<1 produce oscilaciones decrecientes en la salida.', 'Tip de examen: subamortiguado = ondulación temporal.'],
+      ['La estabilidad en sistemas lineales continuos depende de:', 'Ubicación de polos del sistema', ['tamaño del gabinete', 'color del HMI', 'tipo de tornillería'], 'Polos determinan modo temporal y convergencia/divergencia.', 'Tip de examen: observa semiplano de polos, no solo ceros.'],
+      ['El lugar geométrico de las raíces (root locus) muestra:', 'Trayectoria de polos al variar ganancia', ['trayectoria de ceros con frecuencia', 'diagrama de fases mecánicas', 'tabla de errores de sensor'], 'Permite evaluar cómo cambia estabilidad al ajustar K.', 'Tip de examen: root locus = polos versus K.'],
+      ['Una respuesta más rápida pero con mayor riesgo de inestabilidad ocurre con:', 'Kp alto sin rediseño de compensación', ['Ki cero y Kd alto', 'filtro pasabajas más severo', 'muestreo más lento'], 'Aumentar Kp reduce tiempo de subida pero puede bajar márgenes.', 'Tip de examen: lo rápido suele costar robustez.'],
+      ['Tiempo de establecimiento representa:', 'Tiempo para entrar y permanecer en banda de error', ['tiempo al primer cruce de referencia', 'tiempo de muestreo del ADC', 'tiempo de arranque del PLC'], 'Mide cuándo la salida se estabiliza dentro de tolerancia.', 'Tip de examen: no confundir con rise time.'],
+      ['Control de lazo cerrado utiliza:', 'Retroalimentación de la salida', ['solo señal de referencia', 'programa fijo sin medición', 'señal manual del operador'], 'Compara salida real contra referencia para corregir error.', 'Tip de examen: feedback = corrección continua.'],
+      ['En lazo abierto, el controlador:', 'No corrige con medición de salida', ['siempre usa observador de estado', 'elimina perturbaciones automáticamente', 'garantiza error cero'], 'No hay comparación con y(t), por eso su robustez es menor.', 'Tip de examen: lazo abierto es más sensible a perturbaciones.'],
+      ['Estabilidad BIBO significa:', 'Salida acotada ante entrada acotada', ['entrada infinita produce salida cero', 'salida constante para toda entrada', 'error nulo en todo instante'], 'Es criterio práctico de estabilidad entrada-salida.', 'Tip de examen: Bounded In, Bounded Out.'],
+      ['Si en régimen permanente el error es cero para escalón, normalmente existe:', 'Acción integral en el lazo', ['solo control proporcional', 'solo derivada pura', 'control feedforward sin realimentación'], 'La integración incrementa el tipo del sistema y reduce error estático.', 'Tip de examen: cero error al escalón suele requerir integrador.']
+    ]
+  },
+  {
+    category: 'Banco adicional · Motores y variadores (estilo EGEL)',
+    source: 'NEMA MG-1 / IEC 60034',
+    sourceUrl: 'https://www.nema.org/standards/view/motors-and-generators',
+    items: [
+      ['La función principal de un VFD en motor AC es:', 'Regular velocidad variando frecuencia', ['aumentar número de polos', 'cambiar tipo de rotor', 'eliminar necesidad de protección'], 'Un variador modifica frecuencia/voltaje para ajustar velocidad y par.', 'Tip de examen: motor + velocidad variable = VFD.'],
+      ['La velocidad síncrona de un motor de inducción se estima con:', 'n_s = 120f/P', ['n_s = 60P/f', 'n_s = f/P', 'n_s = 2πfP'], 'Depende de frecuencia eléctrica y número de polos.', 'Tip de examen: mayor f, mayor velocidad síncrona.'],
+      ['Si se reduce la frecuencia de salida del VFD (manteniendo control V/f):', 'Disminuye la velocidad del motor', ['aumenta la velocidad', 'no cambia velocidad', 'se invierte automáticamente el giro'], 'La velocidad mecánica sigue de cerca la frecuencia síncrona.', 'Tip de examen: f y rpm son proporcionales en primera aproximación.'],
+      ['El arranque estrella-triángulo se usa para:', 'Reducir corriente de arranque', ['aumentar corriente inicial', 'eliminar deslizamiento', 'corregir factor de potencia a 1'], 'Arranca en estrella para bajar tensión por fase y corriente inicial.', 'Tip de examen: método clásico para limitar inrush.'],
+      ['Comparado con monofásico, el motor trifásico suele ser:', 'Más eficiente y con par más uniforme', ['más ruidoso por definición', 'menos eficiente siempre', 'inviable para industria'], 'La alimentación trifásica ofrece campo giratorio más estable.', 'Tip de examen: en industria domina trifásico por desempeño.'],
+      ['Variar frecuencia en motor AC modifica principalmente:', 'Velocidad de giro', ['resistencia del devanado', 'número de ranuras', 'aislamiento del estator'], 'La frecuencia define velocidad síncrona del campo giratorio.', 'Tip de examen: recuerda n_s = 120f/P.'],
+      ['En motor DC de imán permanente, la velocidad se regula típicamente con:', 'Voltaje de armadura', ['número de polos', 'temperatura ambiente', 'tipo de carcasa'], 'La FEM y velocidad dependen del voltaje aplicado al inducido.', 'Tip de examen: DC clásico: controla V para rpm.'],
+      ['Un encoder incremental se emplea para medir:', 'Posición y velocidad angular', ['solo corriente', 'temperatura de bobina', 'factor de potencia'], 'Entrega pulsos proporcionales al desplazamiento angular.', 'Tip de examen: más resolución = más pulsos por vuelta.'],
+      ['Un servosistema integra normalmente:', 'Motor, sensor y controlador', ['solo motor AC', 'solo PLC y contactor', 'motor y fuente sin realimentación'], 'Servo trabaja en lazo cerrado para posicionamiento preciso.', 'Tip de examen: servo = control + realimentación.'],
+      ['En muchos actuadores eléctricos, el torque es aproximadamente proporcional a:', 'Corriente', ['voltaje cuadrático', 'frecuencia al cubo', 'temperatura ambiente'], 'Constante de par relaciona corriente con esfuerzo electromagnético.', 'Tip de examen: al limitar corriente, limitas torque.']
+    ]
+  },
+  {
+    category: 'Banco adicional · Integración industrial (estilo EGEL)',
+    source: 'ISA-95 / CENEVAL guía técnica',
+    sourceUrl: 'https://www.isa.org/standards-and-publications/isa-standards',
+    items: [
+      ['Para una banda transportadora con velocidad variable, el componente clave es:', 'Variador de frecuencia (VFD)', ['relevador térmico únicamente', 'fuente conmutada aislada', 'contador CTU'], 'El VFD permite ajustar velocidad de proceso según demanda.', 'Tip de examen: control continuo de velocidad → variador.'],
+      ['Un sistema de seguridad funcional básico debe incluir:', 'Sensado + lógica de paro seguro', ['solo HMI con contraseña', 'solo señal luminosa', 'solo botón de arranque'], 'La seguridad exige detectar riesgo y ejecutar acción de paro confiable.', 'Tip de examen: sensor sin lógica no cierra el ciclo de seguridad.'],
+      ['Para detectar botellas transparentes en línea, suele preferirse sensor:', 'Fotoeléctrico con ajuste para transparente', ['inductivo estándar', 'ultrasónico sin calibrar', 'termostato bimetálico'], 'Los fotoeléctricos especializados manejan baja reflectancia y transparencia.', 'Tip de examen: objetos transparentes se resuelven mejor con ópticos dedicados.'],
+      ['Un protocolo industrial muy común y extendido es:', 'Modbus', ['HTTP', 'SMTP', 'USB Mass Storage'], 'Modbus RTU/TCP es ampliamente usado por simplicidad e interoperabilidad.', 'Tip de examen: protocolo clásico de planta = Modbus.'],
+      ['Nivel típico de alimentación de señales digitales en PLC industrial:', '24 VDC', ['5 VAC', '110 VDC', '1.2 VDC'], '24 VDC balancea inmunidad al ruido y seguridad en control.', 'Tip de examen: instrumentación discreta industrial suele ser 24 VDC.'],
+      ['El control ON/OFF en procesos térmicos suele generar:', 'Oscilación alrededor del setpoint', ['seguimiento perfecto sin error', 'estabilidad crítica ideal', 'respuesta lineal sin histéresis'], 'Al no modular continuo, conmutan ciclos por banda diferencial.', 'Tip de examen: ON/OFF = comportamiento cíclico.'],
+      ['La función principal de un SCADA es:', 'Supervisión, alarmas e históricos', ['sustituir todos los PLC', 'control de lazo de alta frecuencia', 'programar firmware de sensores'], 'SCADA opera en capa de supervisión y análisis operacional.', 'Tip de examen: SCADA observa y registra; PLC ejecuta control rápido.'],
+      ['Un HMI permite principalmente:', 'Interacción operador-máquina', ['muestreo analógico de alta velocidad', 'sintonía automática de motores', 'reemplazar buses de campo'], 'Presenta estados, alarmas y comandos de operación.', 'Tip de examen: HMI = interfaz visual del proceso.'],
+      ['La integración mecatrónica se entiende como:', 'Convergencia de mecánica, electrónica y control', ['solo diseño mecánico CAD', 'solo programación PLC', 'solo mantenimiento eléctrico'], 'Combina disciplinas para diseñar sistemas automáticos completos.', 'Tip de examen: palabra clave = integración multidisciplinaria.'],
+      ['En manufactura, la automatización bien implementada mejora:', 'Precisión, repetibilidad y eficiencia', ['solo consumo energético', 'solo estética de equipo', 'solo velocidad sin calidad'], 'Reduce variabilidad humana y optimiza tiempos/costos de proceso.', 'Tip de examen: automatizar busca calidad + productividad.']
+    ]
+  }
+];
+
+function buildSanti50() {
+  return santiQuestionSets.flatMap((section) => section.items.map((item) => ({
+    category: section.category,
+    question: item[0],
+    options: [item[1], ...item[2]],
+    answer: item[1],
+    explanation: `${item[3]} ${item[4]}`,
+    source: section.source,
+    sourceUrl: section.sourceUrl,
+    hint: item[4],
+    deepExplanation: `Base teórica: ${item[3]} ${item[4]}`
+  })));
+}
+
+export const additionalQuestions = [...expandRequestedSections(), ...buildBasic100(), ...buildSanti50()];
